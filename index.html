@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+	
+		<title>ProveEasy</title>
+		<script type="text/javascript" charset="utf-8" src="cordova-1.9.0.js"></script>
+		<script type="text/javascript" charset="utf-8" src="ProdCalc1Probs.js"></script>
+		<script type="text/javascript" src="jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="openProblem.js"></script>
+		<script type="text/javascript" src="basicCommands.js"></script>
+		<script type="text/javascript" src="trees.js"></script>
+		<script type="text/javascript" src="TreeModel.js"></script>
+		<script type="text/javascript">
+		
+		
+		buttonToggle = false;
+		
+			function showProblems() {// show problems on button click
+			
+				if (buttonToggle == false){// if button has not been pressed
+					buttonToggle = true;
+			 		getListOfProbs();
+			 		goBackwards();
+					document.getElementById("goal").innerHTML= "";
+				}else{
+				}
+			}
+			
+		</script>
+	</head>
+	<body>
+			<h3>ProveEasy</h3>
+			<button id = "button1" onClick="showProblems();">Click for List of Problems</button>
+			<p id = "goal"></p>
+	</body>
+</html>
