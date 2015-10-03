@@ -16,6 +16,8 @@
         <script type="text/javascript" src="PatternMatching.js"></script>
         <script type="text/javascript" src="Display.js"></script>
         <script type="text/javascript" src="Substitute.js"></script>
+        <script type="text/javascript" src= "graphView.js"></script>
+        <script type="text/javascript" src= "d3.min.js"></script>
         <script type="text/javascript" src="ControlFunctionAndTreeInsertion.js"></script>
 		<script type="text/javascript">
 		
@@ -34,12 +36,8 @@
 		</script>
 	</head>
 	<body>
-			
-			<input type = "text" id = "myText1" value = "pattern text here"/>
-       		<input type = "text" id = "myText2" value = "instance text here"/>
-
 			<h3>ProveEasy</h3>
 			<button id = "button1" onClick="showProblems();">Click for List of Problems</button>
-			<button id = "button2" onClick="turnTextToTreesTestMatching(document.getElementById('myText1').value, document.getElementById('myText2').value)">Click to attempt matching</button>
+			<button id = "button2" onClick="toggleView(proofTree);">Toggle view</button>
 	</body>
 </html>

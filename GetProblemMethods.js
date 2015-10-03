@@ -35,6 +35,11 @@ function getListOfProbs(){// get and display all problem titles
 		//remove it
   		document.body.removeChild(document.getElementById("entireProofSoFar"));
   	}
+  	if(document.getElementById("graphView")){
+		//remove it
+  		document.body.removeChild(document.getElementById("graphView"));
+  	}
+
 
   	if(document.getElementById("rules")){
 		//remove it
