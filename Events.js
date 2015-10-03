@@ -5,6 +5,10 @@ $(document).ready(function(){
 			givenAllSelected = 0;
 
 
+
+
+
+
 	$(document).on( "click","p, pre", function(event){
 
 

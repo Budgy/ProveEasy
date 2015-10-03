@@ -29,44 +29,89 @@ function substitute (matches, commandSubNode){
 
         for (var j =0; j<currentNode.Givens.length;j++){// for each given in each node
 
-            if(currentNode.Givens[j].indexOf("var ") > -1){//if it has var at the start in the sub node then a new variable needs to be created and changed throughout the rest of the matches
 
-                //remove it but set the flag
-                currentNode.Givens[j] = currentNode.Givens[j].replace("var ","");
-                newVarNeeded=true;
+            if (typeof currentNode.Givens[j] == 'object'){
 
+                currentNode.Givens[j].walk(function(node){
+
+                    if(matches.hasOwnProperty(node.model.value)){
+
+
+                        node.model.value = matches[node.model.value];
+
+
+                    }
+
+                });
+
+            }else{
+
+                if(currentNode.Givens[j].indexOf("var ") > -1){//if it has var at the start in the sub node then a new variable needs to be created and changed throughout the rest of the matches
+
+                    //remove it but set the flag
+                    currentNode.Givens[j] = currentNode.Givens[j].replace("var ","");
+                    newVarNeeded=true;
+
+
+                }
+
+                if(matches.hasOwnProperty(currentNode.Givens[j])){// if matches has a key of the same name
+
+                    if (newVarNeeded){
+
+                        //go through the matches creating a new variable
+                        matches = replaceVariableInTree(matches, matches[currentNode.Givens[j]]);
+                        newVarNeeded=false;
+
+                    }
+
+
+                    // change the value of the given to the value stored in matches which corosponds to the key
+                    currentNode.Givens[j] = matches[currentNode.Givens[j]];
+
+                }
 
             }
 
-            if(matches.hasOwnProperty(currentNode.Givens[j])){// if matches has a key of the same name
 
-                if (newVarNeeded){
+        }
 
-                //go through the matches creating a new variable
-                matches = replaceVariableInTree(matches, matches[currentNode.Givens[j]]);
-                newVarNeeded=false;
+        if (typeof currentNode.Show == 'object'){
+
+
+             currentNode.Show.walk(function(node){
+
+                    if(matches.hasOwnProperty(node.model.value)){
+
+
+                        node.model.value = matches[node.model.value];
+
+
+                    }
+
+                });
+
+        }else {
+
+            if (matches.hasOwnProperty(currentNode.Show)){//do the same with show
+
+                currentNode.Show = matches[currentNode.Show];
+
+                if (typeof currentNode.Show == "string"){
+
+                    currentNode.Show = stringToTree(currentNode.Show);
 
                 }
 
 
-                // change the value of the given to the value stored in matches which corosponds to the key
-                currentNode.Givens[j] = matches[currentNode.Givens[j]];
-
-            }
-        }
-
-        if (matches.hasOwnProperty(currentNode.Show)){//do the same with show
-
-            currentNode.Show = matches[currentNode.Show];
-
-            if (typeof currentNode.Show == "string"){
-
-                currentNode.Show = stringToTree(currentNode.Show);
-
             }
 
-
         }
+
+
+
+
+
     }
     return commandSubNode;
 }
@@ -118,7 +163,7 @@ function replaceVariableInTree(matches, variable){
 }
 
 
-function givenAllControlFunctionPart1(matches, commandSubNode, commandName){//special function for given all rule
+function givenAllControlFunctionPart1(matches, commandSubNode, commandName, commandTracker){//special function for given all rule
 
 
 
@@ -143,7 +188,7 @@ function givenAllControlFunctionPart1(matches, commandSubNode, commandName){//sp
             if(currentNode.Givens[j].indexOf("with") > -1){//if it contains "with" then it is given all and needs a term, 
 
 
-                givenAllFunction(matches, currentNode.Givens[j], commandSubNode, commandName);
+                givenAllFunction(matches, currentNode.Givens[j], commandSubNode, commandName, commandTracker);
 
             
             }
@@ -157,8 +202,11 @@ function givenAllControlFunctionPart1(matches, commandSubNode, commandName){//sp
 
 
 
-function givenAllControlFunctionPart2(matches, commandSubNode){
+function givenAllControlFunctionPart2(matches, commandSubNode, commandTracker, term){
 
+
+
+    commandTracker = commandTracker + " "+term;
     var newMatches= cloneControlFunction(matches);
 
     for (var i =0; i<commandSubNode.length;i++){// for each node in the sub pattern
@@ -194,7 +242,7 @@ function givenAllControlFunctionPart2(matches, commandSubNode){
     }
 
 
-    insertIntoTree(commandSubNode, proofTree);
+    insertIntoTree(commandSubNode, proofTree, commandTracker);
     visualiseProofTree(proofTree);
     commandSubNode= {};
     matches = {};
@@ -211,9 +259,9 @@ function givenAllControlFunctionPart2(matches, commandSubNode){
 
 //givenString: p with term for x
 
-function givenAllFunction(matches, givenString, commandSubNode, commandName){
+function givenAllFunction(matches, givenString, commandSubNode, commandName, commandTracker){
 
-    var newMatches= cloneControlFunction(matches);//deep clone matches to avoid altering the tree
+    newMatches= cloneControlFunction(matches);//deep clone matches to avoid altering the tree
     
     givenStrings = givenString.split(" ");
 
@@ -239,8 +287,7 @@ function givenAllFunction(matches, givenString, commandSubNode, commandName){
                     term = document.getElementById(event.target.id).textContent;
                     givenAllSelected = 0;
                     newMatches =  givenAllSubPart(subject, varToReplace, term, newMatches);
-
-                    givenAllControlFunctionPart2(newMatches, commandSubPart);
+                    givenAllControlFunctionPart2(newMatches, commandSubPart, commandTracker, term);
                     
                     //when selection of choice is detected
 

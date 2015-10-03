@@ -2,6 +2,8 @@
 <html lang="en">
 
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="jquery-ui.css">
+
 
 	<head>
 		<style>
@@ -36,6 +38,7 @@
 		<script type="text/javascript" src="PEG.js"></script>
 		<script type="text/javascript" src="TreeModel.js"></script>
 		<script type="text/javascript" src="jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="jquery-ui.js"></script>
 		<script type="text/javascript" src="ProdCalc1Probs.js"></script>
 		<script type="text/javascript" src="Events.js"></script>
 		<script type="text/javascript" src="trees.js"></script>
@@ -62,10 +65,43 @@
 				}
 			}
 
+
+			firstTimeToggle = false
+
+			function firstTimeStartUp(){
+				$("[id^='getStarted']").hide();
+
+				if (firstTimeToggle == false){// if button has not been pressed
+					firstTimeToggle = true;
+			 		getListOfProbs();
+                                     
+				}
+
+			}
+
+		 //  	$(function() {
+   //  			$( document ).tooltip({});
+			// });
+
+
+			// $( "[id ^= 'proveEasyTitle']" ).tooltip({
+			// 	content: "Awesome title!"
+			// });
+
+
+
 		</script>
 	</head>
 	<body>
 			<h3 id = "proveEasyTitle">ProveEasy</h3>
+
+
+			<div>
+			<button id = "getStarted" onClick="firstTimeStartUp();">GetStarted</button>
+			</div>
+
+
+
 			<button id = "button1" onClick="showProblems();">Click for List of Problems</button>
 			<button id = "button2" onClick="toggleView(proofTree);">Toggle view</button>
 			<button id = "button3" onClick="toggleRulesVisibility();">hide commands</button>

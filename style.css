@@ -1,28 +1,169 @@
+
 #rules{
     width: 150px;
     float:left; /* add this */
-    border: 1px solid red;
-    background-color: white;
     position: relative;
     z-index: 999;
 }
+
+[id^='rule ']{
+
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    border-radius: 5px;
+    background-color: #C2C2C2;
+    text-align: center;
+
+}
+[id^='rule '].hover{
+
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    border-radius: 5px;
+    background-color: #666666;
+
+}
+
+[id^='sequent']{
+
+    width: 150px;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    border-radius: 5px;
+    background-color: #C2C2C2;
+    margin-right: auto;
+    margin-left:auto;
+    text-align: center;
+
+}
+
+
 #givenChoices{
     width: 150px;
     float:left; /* add this */
-    border: 1px solid red;
     position: relative;
     z-index: 99;
+    border-radius: 5px;
+    background-color: #C2C2C2;
 }
 
 
 #entireProofSoFar{
-    border: 1px solid green;
+    
     overflow: hidden; /* if you don't want #second to wrap below #first */
     position: relative;
     z-index: 9;
+    box-shadow: -5px 5px 50px black;
+    border-radius: 10px;
+    background-color: #C2C2C2;
+    
 }
+
 #proveEasyTitle{
 
 	text-align: center;
 
 }
+
+body{
+    background-color: #666666;
+    /*background-color: white;*/
+
+}
+div{
+
+    margin:0px 10px 10px 0px;
+
+
+}
+button{
+
+    margin:0px 10px 10px 0px;
+
+
+}
+
+#button3{
+
+    display:none;
+
+}
+#button2{
+
+    display:none;
+
+}
+#button1{
+
+    display:none;
+
+}
+#getStarted{
+
+
+    margin:0 auto;
+    display:block;
+    text-align: center;
+
+}
+#proveEasyTitle{
+
+    color: white;
+    font-size: 40px;
+    height: 160px;
+    background-image: url(title-background.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+
+
+}
+#rulesTitle{
+
+    color: white;
+    text-align: center;
+}
+#proofTreeTitle{
+
+    text-align: center;
+
+}
+
+
+#sequentTitle{
+
+    text-align: :center;
+    color: white;
+    background-color: transparent;
+
+
+}
+
+/*@media handheld {
+
+    #proveEasyTitle{
+
+        color: white;
+        font-size: 40px;
+        height: 40px;
+        background-image: url(title-background.png);
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+
+
+    }
+
+}*/
+
+@media (max-width:960px) {     #proveEasyTitle{
+
+        color: white;
+        font-size: 40px;
+        height: 160px;
+        background-image: url(title-background.png);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        padding-top: 5px;
+        padding-bottom:5px;
+
+
+    } }

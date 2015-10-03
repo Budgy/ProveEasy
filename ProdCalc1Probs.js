@@ -17,12 +17,14 @@ Problems["andOr2"] = {Givens:[], Show:"{p|{q&r}}->{p|q}"};
 Problems["andOr3"] = {Givens:[], Show:"{p&{p->q}}->{p&q}"};
 Problems["Absorption1"] = {Givens:[], Show:"{p|{p&q}}->p"};
 Problems["Absorption2"] = {Givens:[], Show:"p->{p&{p|q}}"};
-Problems["notNot1"] = {Givens:[], Show:"not(not p)"};
-Problems["BasicAll"] = {Givens:[], Show:"{All a b}"};
-Problems["givenAllTest"] = {Givens:["All a b"], Show:"r"};
+Problems["notNot1"] = {Givens:["p"], Show:"not(not p)"};
+Problems["notNot2"] = {Givens:["not(not p)"], Show:"p"};
 Problems["allComm"] = {Givens:[], Show:"{All x {All y { x R y}}} -> {All y1 {All x1 { x1 R y1}}}"};
-//Problems["impAll1"] = "{all x {{Q x} -> {P x}}} -> { {all x {Q x}} -> {all x {P x}} }";
-
+Problems["exAll"] = {Givens:[], Show:"{Ex x {All y { x R y}}} -> {All y {Ex x { x R y}}} "};
+Problems["plusAssoc"] = {Givens:[], Show:"All l {All m {All n { {l + {m + n}} = {{l + m} + n} }}}"};
+//Problems["plusComm"] = {Givens:[], Show:"All l {All m {All n { {l + {m + n}} = {{l + m} + n} }}}"};
+Problems["impAll1"] = {Givens:[], Show:"{All x {{Q x} -> {P x}}} -> { {All x {Q x}} -> {All x {P x}} }"};
+Problems["test"] = {Givens:['P x'], Show:"P x"};
 
 
 

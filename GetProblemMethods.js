@@ -15,20 +15,23 @@ function getProblem(Title){// get the goal for a specific problem
     return Problems[Title];
 }
 
-names = Object.keys(Problems);
-length = names.length;
-
 function removeProbsFromDoc(){
 
     for (i = 0; i<length; i++){
 
-        var prob = document.getElementById("sequent"+i);
-        document.body.removeChild(prob);
+
+        $( "[id^='sequent']" ).remove();
+
     }
 
 }
 
 function getListOfProbs(){// get and display all problem titles
+
+
+    $("[id^='button']").hide();
+
+
 
     //check if document contains a proofTree already
     if(document.getElementById("entireProofSoFar")){
@@ -46,6 +49,15 @@ function getListOfProbs(){// get and display all problem titles
         document.body.removeChild(document.getElementById("rules"));
     }
 
+
+
+    var probTitle = document.createElement("p")
+    var text=document.createTextNode("Please select a problem");
+        probTitle.id= "sequentTitle";
+        probTitle.appendChild(text);
+        document.body.appendChild(probTitle);
+
+
     for (i = 0; i<length; i++){
 
         var prob = document.createElement("p");
@@ -54,4 +66,5 @@ function getListOfProbs(){// get and display all problem titles
         prob.appendChild(node);
         document.body.appendChild(prob);
     }
+
 }

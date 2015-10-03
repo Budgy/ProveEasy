@@ -37,12 +37,20 @@ function allCommands(){
 
         showAll:"",
 
+        showAll2:"",
+
+        // Rule showAll2 {} {
+        // Show all X {all Y P}
+        // ######
+        // Given var X; Given var Y; Show P
+        // }
+        //  
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         givenImpFwd:"",
-        givenAll:"",
 
+        givenAll:"",
 
         // Rule givenImpFwd {g1 g2} {
         // Path $g1 $g2
@@ -65,8 +73,6 @@ function allCommands(){
 
         showImpBack:"",
 
-
-
         // Rule givenImpFwd2 {g1 g2 g3} {
         // Path $g1 $g2 g3
         // Given {PP1 & PP2} -> QQ
@@ -77,7 +83,6 @@ function allCommands(){
         // Given QQ
         // Show RR
         // }
-
 
         givenImpFwd2:"",
 
@@ -90,153 +95,23 @@ function allCommands(){
         // Show QQ
         // }
 
-        showImpBack2:""
+        showImpBack2:"",
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
-        givenNot:{
-
-            type: "given",
-
-            Pattern:{
-                Givens: [stringToTree("¬p")],
-                Show: stringToTree("r"),
-            },
-            Sub:[
-                {
-                    Givens:["p->false"],
-                    Show: "r",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        givenNot:"",
         
+        showNot:"",
         
-         showNot:{
-
-            type: "show",
-/*
-            Pattern:{
-                Givens: [],
-                Show: stringToTree("¬p"),
-            },
-            Sub:[
-                {
-                    Givens:["p"],
-                    Show: "false",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
-
+        contradiction:"",
         
-        contradiction:{
-
-            type: "show",
-/*
-            Pattern:{
-                Givens: [],
-                Show: stringToTree("p"),
-            },
-            Sub:[
-                {
-                    Givens:["¬p"],
-                    Show: "false",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        showLeqSuc:"",
         
+        showGeqSuc:"",
         
-        showLeqSuc:{
+        natShowSuc:"",
 
-            type: "show",
-
-            Pattern:{
-                Givens: [],
-                Show: stringToTree("(suc x)<= (suc y)"),
-            },
-            Sub:[
-                {
-                    Givens:[],
-                    Show: "x<=y",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-                
-                
-        },
-        
-        showGeqSuc:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: [],
-                Show: stringToTree("(suc x) >= (suc y)"),
-            },
-            Sub:[
-                {
-                    Givens:[],
-                    Show: "x>=y",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
-        
-        natShowSuc:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: [],
-                Show: stringToTree("(suc x)= (suc y)"),
-            },
-            Sub:[
-                {
-                    Givens:[],
-                    Show: "x=y",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
-
-        showEqSwap:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: [],
-                Show: stringToTree("x = y"),
-            },
-            Sub:[
-                {
-                    Givens:[],
-                    Show: "y=x",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        }
-
-        */
-        
-
-
+        showEqSwap:""
 
 
     };
@@ -286,7 +161,8 @@ function getCommandPatterns(commandName){
                 children: [],
                 activeBranch: 1,
                 id: 0,
-                completeBranch:0
+                completeBranch:0,
+                ruleUsed:"?"
             }]
         };
 
@@ -313,7 +189,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id:0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 },
                 {
                     Givens:["q"],
@@ -321,7 +198,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 0,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -347,7 +225,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -374,7 +253,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 },
                 {
                     Givens:[],
@@ -382,7 +262,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 0,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -438,7 +319,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 },
                 {
                     Givens:["q"],
@@ -446,7 +328,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 0,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -474,7 +357,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -502,7 +386,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -530,7 +415,36 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showAll2"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: "",
+                Show: stringToTree("All x (All y p)"),
+            },
+            Sub:[
+
+                {
+                    Givens:["var x", "var y"],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -557,7 +471,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -584,7 +499,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -610,7 +526,8 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -636,15 +553,17 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 },
                 {
                     Givens:[],
-                    Show: "q",
+                    Show: "d",
                     children: [],
                     activeBranch: 0,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
@@ -670,72 +589,202 @@ function getCommandPatterns(commandName){
                     children: [],
                     activeBranch: 1,
                     id: 0,
-                    completeBranch:0
+                    completeBranch:0,
+                    ruleUsed:"?"
                 }]
         };
 
         return pats;
     }
 
-// Rule givenAll {g tm} { # g1: givenpath tm : term to instantiate
-//         Path $g
-//     Given all X P; Show Q
-//     ######
-//     Given P WITH $tm FOR X; Show Q
-//     }
 
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   /*                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    else if (commandName=="givenNot"){
 
-    else if (commandName=="showImp"){
+        var pats={
 
-        var pats=
+            type: "given",
 
-
-
-
-
-
+            Pattern:{
+                Givens: [stringToTree("not q")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:[stringToTree("q->false")],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+        }
 
         return pats;
     }
 
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    else if (commandName=="showImp"){
+    else if (commandName=="showNot"){
 
-        var pats=
+        var pats={
 
+            type: "show",
 
-
-
-
-
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("not p"),
+            },
+            Sub:[
+                {
+                    Givens:["p"],
+                    Show: "false",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+        }
 
         return pats;
     }
 
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    else if (commandName=="showImp"){
+    else if (commandName=="contradiction"){
 
-        var pats=
+        var pats={
 
+            type: "show",
 
-
-
-
-
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("p"),
+            },
+            Sub:[
+                {
+                    Givens:[stringToTree("not p")],
+                    Show: "false",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+        }
 
         return pats;
     }
-*/
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showLeqSuc"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("(suc x)<= (suc y)"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: stringToTree("x<=y"),
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+                                
+        }
+
+        return pats;
+    }
+
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    else if (commandName=="showGeqSuc"){
 
+        var pats={
 
+            type: "show",
 
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("(suc x) >= (suc y)"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: stringToTree("x>=y"),
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+        }
 
+        return pats;
+    }
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="natShowSuc"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("(suc x)= (suc y)"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: stringToTree("x=y"),
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+        }
+
+        return pats;
+    }
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showEqSwap"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("x = y"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: stringToTree("y=x"),
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+        }
+
+        return pats;
+    }
 
     else{// command doesn't exist :S
         console.log("command does not exits");
@@ -797,27 +846,6 @@ function getAllGivens(proofTree) {// gets all givens in the active path of the t
     return allActiveGivens;
 };
 
-// Rule showImp {} {
-// Show P -> Q
-// #####
-// Given P; Show Q
-// }
-
-// Rule givenImp {g} {
-// Path $g
-// Given P -> Q; Show R
-// #####
-// Show P
-// Given Q; Show R
-// }
-//
-// Rule showAll {} {
-// Show all X P
-// ######
-// Given var X; Show P
-// # makes a fresh x at proof time
-// }
-//
 // #### derived rules ####
 
 //
@@ -830,12 +858,6 @@ function getAllGivens(proofTree) {// gets all givens in the active path of the t
 // ## Bug to be fixed - use [list ] instead of { } until fixed
 // }
 //
-// Rule showAll2 {} {
-// Show all X {all Y P}
-// ######
-// Given var X; Given var Y; Show P
-// }
-//	
 
 
 
@@ -851,5 +873,333 @@ function getCommandSubPart(commandName){
 
 
     return subPart;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////TOOLTIPS!!!!!!!!!!!!!!!!///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getToolTipInfo(commandName){
+
+    info= ""
+
+
+    if (commandName=="showImp"){
+
+        info = "{Show p -> q} #### {Given p; Show q}";
+
+        return info
+    }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenImp"){
+
+        info = "{Given p -> q; Show r} #### {Show p;} {Given q; Show r}";
+
+        return info
+
+    }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenAnd"){
+
+        info = "{Given p & q; Show r} #### {Given p; Given q; Show r}";
+
+        return info
+
+    }
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showAnd"){
+
+        info = "{Show p & q} #### {Show p} {Show q}";
+
+        return info
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="given"){
+
+        info = "Current show is given";
+
+        return info;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="givenFalse"){
+
+        info = "Current show false is given";
+
+        return info;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="givenOr"){
+
+
+
+        info = "{Given p | q; Show r} #### {Given p; Show r} {Given q; Show r}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="showOr1"){
+
+
+        info = "{Show p | q} #### {Show p}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="showOr2"){
+
+        info = "{Show p | q} #### {Show q}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="showAll"){
+
+        info = "{Show All x p} #### {Given var x; Show p}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showAll2"){
+
+        info = "{Show All x (All y p)} #### {Given var x; Given var y; Show p}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="givenImpFwd"){
+
+        info = "{Given p -> q; Given p; Show r} #### {Given q; Show r}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="showImpBack"){
+
+        info = "{Given p -> r; Show r} #### {Show p}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenImpFwd2"){
+
+        info = "{Given (p&d)-> q; Given p; Given d; Show r} #### {Given q; Show r}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showImpBack2"){
+
+        info = "{Given (p&d) -> r; Show r} #### {Given p; Show r} {Given d; Show r}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenAll"){
+
+        info = "{Given All x p; Show q} #### {Given p WITH term FOR x; Show q}";
+
+        return info;
+
+    }
+
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenNot"){
+
+        info = "{Given not q; Show r} #### {Given q->false; Show r}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showNot"){
+
+        info = "{Show not p} #### {Given p; Show false}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="contradiction"){
+
+        info = "{Show p} #### {Given not p; Show false}";
+
+        return info;
+
+    }
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showLeqSuc"){
+
+        info = "{Show (suc x) <= (suc y)} #### {Show x <= y}";
+
+        return info;
+
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showGeqSuc"){
+
+        info = "{Show (suc x) >= (suc y)} #### {Show x >= y}";
+
+        return info;
+
+    }
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="natShowSuc"){
+
+        info = "{Show (suc x) = (suc y)} #### {Show x = y}";
+
+        return info;
+
+    }
 
 }

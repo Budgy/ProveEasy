@@ -34,6 +34,7 @@ function visualiseProofTree(proofTree){
 
 		var givens = node.model.Givens;
 		var show = node.model.Show;
+		var ruleUsed = node.model.ruleUsed;
 		var id = node.model.id;
 		var	j = 1;
 
@@ -103,7 +104,7 @@ function visualiseProofTree(proofTree){
 
 	    }
 
-	    showText = id+"    Show "+displayTree(show);
+	    showText = id+"    Show "+displayTree(show)+" "+"by"+ " "+ ruleUsed;
 
 	 
 		var showNode=document.createTextNode(indent+showText);
@@ -145,6 +146,7 @@ function visualiseProofTree(proofTree){
 
 function displayRules () {// display the rules/commands
 
+	$("[id^='button']").show();
 
 	if(document.getElementById("rules")){
 		//remove it
@@ -169,6 +171,8 @@ function displayRules () {// display the rules/commands
 		var command = document.createElement("p");
 		var commandNode=document.createTextNode(key);
 		command.id= "rule "+i;
+		command.title = getToolTipInfo(key);
+		command.rel = "tooltip";
 		i++;
 		command.appendChild(commandNode);
 		document.getElementById("rules").appendChild(command);
@@ -204,11 +208,11 @@ function toggleRulesVisibility(){
 
 		$("#rules").animate({
 	     	left:'10',
-		});
+		}, 100, 'linear');
 
 		$("#rules").animate({
 	     	left:'-150',
-		});
+		}, 200, 'linear');
 
 		$("#rules").hide({});
 		toggleRules=true;
@@ -219,11 +223,11 @@ function toggleRulesVisibility(){
 
 		$("#rules").animate({
 	     	left:'10',
-		});
+		}, 200, 'linear');
 
 		$("#rules").animate({
 	     	left:'0',
-		});
+		}, 100, 'linear');
 
 		toggleRules = false;
 	}

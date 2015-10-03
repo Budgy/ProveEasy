@@ -32,7 +32,8 @@ function initialiseProofTree(problem) {//currently playing around with adding ch
             children: [], 
             activeBranch: 1,
             id: 1,
-            completeBranch:0
+            completeBranch:0,
+            ruleUsed:"?"
         });
 
 
@@ -46,7 +47,8 @@ function initialiseProofTree(problem) {//currently playing around with adding ch
             children: [], 
             activeBranch: 1,
             id: 1,
-            completeBranch:0
+            completeBranch:0,
+            ruleUsed:"?"
         });
     }
 
@@ -125,6 +127,17 @@ function displayTree(tree) {// takes a tree and prints it as a string with appro
             
 
         }else if (["not","Suc"].indexOf(node.model.value) > -1){
+
+
+            if(node.model.type == "operator"&&operator ==""){
+
+                operator = node.model.value;
+                rightSide = displayTree(node.children[0]);     
+                return false;
+
+            }
+
+        }else if ((["P","Q","R"].indexOf(node.model.value) > -1) && node.children.length == 1){
 
 
             if(node.model.type == "operator"&&operator ==""){
