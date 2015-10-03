@@ -69,7 +69,11 @@ function makeGraph(textProofTree, scale){
 
 ////////////////////////////////////collapsable archgraph/////////////////////////////////////////////
 
+  if(document.getElementById("graphView")){//if graph veiw currently
 
+    document.body.removeChild(document.getElementById("graphView"));
+
+  }
 
 
 var margin = {top: 20, right: 0, bottom: 20, left: 0},
@@ -116,7 +120,7 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
      }
    }
 
-   root.children.forEach(collapse);
+  // root.children.forEach(collapse);
    update(root);
  //});
 
@@ -132,7 +136,7 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
        d3.select("#graphView").attr("height", (nodes.length *180) +100);
 
    // Normalize for fixed-depth.
-   nodes.forEach(function(d) { d.y = d.depth * 180; });
+   nodes.forEach(function(d) { d.y = d.depth * 100; });
 
 
 
@@ -151,24 +155,30 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
    // Enter any new nodes at the parent's previous position.
    var nodeEnter = node.enter().append("g")
        .attr("class", "node")
-       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-       .on("click", click);
+       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; });
+       
 
    nodeEnter.append("circle")
-       .attr("r", 1e-6)
+       .attr("r", 6)
        .style("fill", function(d) { return d._children ? "black" : "#fff"; })
-       .style("stroke", "black");
+       .style("stroke", function(d) { return d.model.model.activeBranch ? "yellow" : "#C2C2C2"; })
+       .on("click", click);
 
 
 
 
-       var allGElements = node[0];
+       var allGElements = nodeEnter[0];
 
 
 
 
        for (var gElement = 0; gElement<allGElements.length; gElement++){
 
+
+
+
+
+        if (!(allGElements[gElement] === null)) {
 
          currentSelection=  d3.select(allGElements[gElement]);
 
@@ -178,32 +188,22 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
             for (var given = 0; given<allGElements[gElement].__data__.model.model.Givens.length;given++){
 
 
-              //currentSelection.append("text").text("HELLOOOOOOOO");
-              //test = displayTree(allGElements[gElement].__data__.model.model.Givens[given]);
-
               currentSelection.append("text")
                 .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
                  .attr("dy", ((-2*given)-1.5)+"em")
+                 .attr("id", function(d) { return d.model.model.activeBranch ? "1given"+allGElements[gElement].__data__.model.model.id+"."+ (given+1) : "given"+allGElements[gElement].__data__.model.model.id+"."+(given+1); })
                  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-                 .text("Given: "+displayTree(allGElements[gElement].__data__.model.model.Givens[given]));
+                 .text("Given: "+displayTree(allGElements[gElement].__data__.model.model.Givens[given]))
+                 .style('fill',function(d) { return d.model.model.completeBranch ? "black":(d.model.model.activeBranch ? "yellow" : "#C2C2C2"); });
 
-
-
-
-
-
-
-              // allGElements[gElement].append("text")
-              //    .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-              //    .attr("dy", gElement+"0.5em")
-              //    .attr("id", "given"+allGElements[gElement].__data__.model.model.id)
-              //    .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-              //    .text("Given: "+displayTree(allGElements[gElement].__data__.model.model.Givens[given]));
 
             }
 
 
           }
+
+        }
+
 
        }
 
@@ -213,7 +213,8 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
      .attr("dy", ".35em")
      .attr("id", function (d){return "show"+d.model.model.id})
      .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-     .text(function (d){return "Show: "+displayTree(d.model.model.Show);});
+     .text(function (d){return "Show: "+displayTree(d.model.model.Show);})
+     .style('fill',function(d) { return d.model.model.completeBranch ? "black":(d.model.model.activeBranch ? "yellow" : "#C2C2C2"); });
        //.style("fill-opacity", 1e-6);
 
 
@@ -372,7 +373,7 @@ function toggleView(proofTree){
 		//remove it
 	  	document.body.removeChild(document.getElementById("entireProofSoFar"));
 	  	// var tree = new TreeModel();
-    	document.body.removeChild(document.getElementById("rules"));
+    //	document.body.removeChild(document.getElementById("rules"));
     // 	proofTree = tree.parse(proofTree);
 	  	makeGraph(proofTree,1.5);
         //$("body").scrollTop($("#graphView").offset().top);

@@ -54,32 +54,7 @@ function controlFunction(selectedGivens,command, proofTree){
 
                             var stringCheckGiven = displayTree(GivenVariables[i]);
                             var stringCheckShow = displayTree(node.model.Show);
-                            // lengthCheck = lengthCheck.replace('(', '');
-                            // lengthCheck = lengthCheck.replace(')', '');
-
-                            // if (lengthCheck != "false"){
-                                
-                            //     if(lengthCheck.length>1){
-
-
-                            //         if(GivenVariables[i].children.length !=1  
-                            //                             || GivenVariables[i].model.children[0].type != 'variable'
-                            //                                         || GivenVariables[i].model.children[0].value != node.model.Show.model.children[0].value){//if it is 'Q x', 'not x', 'suc x'
-
-
-                            //         alert("not given");
-                            //         return false;
-
-
-
-
-                            //         } 
-
-
-                            //     }      
-                                
-                                
-                            // }
+                            
 
                             if (stringCheckShow != stringCheckGiven){
 

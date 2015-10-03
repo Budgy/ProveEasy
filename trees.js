@@ -442,9 +442,26 @@ function changeToThisBranchPath (id, proofTree) {//change active branch, buggy
 
         });
 
-        // refresh printed tree
-        visualiseProofTree(proofTree);
-        return null;
+
+
+
+
+        if(document.getElementById('entireProofSoFar')){
+
+            // refresh printed tree
+            visualiseProofTree(proofTree);
+            return null;
+
+
+
+
+        }
+        else if(document.getElementById('graphView')){
+
+            makeGraph(proofTree,1.5);
+
+            return null;
+        }
 
     }
 

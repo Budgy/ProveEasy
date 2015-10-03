@@ -76,6 +76,12 @@
     background-color: #C2C2C2;
     
 }
+#graphView{
+    
+    overflow: hidden; /* if you don't want #second to wrap below #first */
+    position: absolute;
+    z-index: 9;
+}
 
 #proveEasyTitle{
 

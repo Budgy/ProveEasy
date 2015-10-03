@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 	$('#adviceContainer').delay(1000).fadeOut();
 
-	$(document).on( "click","p, pre", function(event){
+	$(document).on( "click","p, pre, text", function(event){
 
 
 
@@ -35,9 +35,14 @@ $(document).ready(function(){
 			controlFunction(givenCurrentlySelected, ruleSelected, proofTree);
 			givenCurrentlySelected = [];
 
+			if(document.getElementById('graphView')){
 
-			visualiseProofTree(proofTree);
+				toggleView(proofTree);
+				toggleView(proofTree);
 
+			}else{
+				visualiseProofTree(proofTree);
+			}
 			//tell control function
 
 		}
@@ -54,22 +59,53 @@ $(document).ready(function(){
 
 		else if ($(this).is("[id ^= '1given']") && givenRuleSelected == 0){ //if a given is selected when a given rule has been chosen
 
-			if (document.getElementById(event.target.id).style.backgroundColor == "rgb(165, 42, 42)"){
 
-				document.getElementById(event.target.id).style.backgroundColor = "yellow";
 
-				//remove given from selection
-				var index = givenCurrentlySelected.indexOf(document.getElementById(event.target.id));
-				if (index > -1) {
-				    givenCurrentlySelected.splice(index, 1);
+
+			if(document.getElementById('graphView')){
+
+				if (document.getElementById(event.target.id).style.fill == "rgb(165, 42, 42)"){
+
+					document.getElementById(event.target.id).style.fill = "yellow";
+
+					//remove given from selection
+					var index = givenCurrentlySelected.indexOf(document.getElementById(event.target.id));
+					if (index > -1) {
+					    givenCurrentlySelected.splice(index, 1);
+					}
+
+				}
+				else {
+
+					document.getElementById(event.target.id).style.fill = "brown";
+					givenCurrentlySelected.push(document.getElementById(event.target.id));
 				}
 
-			}
-			else {
 
-				document.getElementById(event.target.id).style.backgroundColor = "brown";
-				givenCurrentlySelected.push(document.getElementById(event.target.id));
+
+
+			}else{
+
+				if (document.getElementById(event.target.id).style.backgroundColor == "rgb(165, 42, 42)"){
+
+					document.getElementById(event.target.id).style.backgroundColor = "yellow";
+
+					//remove given from selection
+					var index = givenCurrentlySelected.indexOf(document.getElementById(event.target.id));
+					if (index > -1) {
+					    givenCurrentlySelected.splice(index, 1);
+					}
+
+				}
+				else {
+
+					document.getElementById(event.target.id).style.backgroundColor = "brown";
+					givenCurrentlySelected.push(document.getElementById(event.target.id));
+				}
+
+
 			}
+
 
 		}
 
