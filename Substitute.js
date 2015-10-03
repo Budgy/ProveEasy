@@ -349,7 +349,7 @@ function givenAllFunction(matches, givenString, commandSubNode, commandName, com
        //if not alert that there are no variables to choose from
     else{
 
-        alert("no applicable givens");
+        alert("no givens present that may be used as term");
 
     }
 

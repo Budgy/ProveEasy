@@ -63,36 +63,42 @@ function controlFunction(selectedGivens,command, proofTree){
 
                             }
                             
+                            if(stringCheckShow == stringCheckGiven){
 
-                            node.model.completeBranch = 1;
-                            node.model.ruleUsed = command;
+                                node.model.completeBranch = 1;
+                                node.model.ruleUsed = command;
 
-                            var hasBeenMatch =0;
+                                var hasBeenMatch =0;
 
 
-                            proofTree.walk(function (node) {
-                                // Halt the traversal by returning false
-                                if (node.model.children.length == 0 &&node.model.completeBranch==0){//find incomplete branch and switch to it
+                                proofTree.walk(function (node) {
+                                    // Halt the traversal by returning false
+                                    if (node.model.children.length == 0 &&node.model.completeBranch==0){//find incomplete branch and switch to it
 
-                                    hasBeenMatch =1;
-                                    changeToThisBranchPath(node.model.id,proofTree);
+                                        hasBeenMatch =1;
+                                        changeToThisBranchPath(node.model.id,proofTree);
+                                        return false;
+
+                                    }
+                                });
+
+                                if (hasBeenMatch ==0){
+
+                                    alert("proofComplete");
                                     return false;
 
                                 }
-                            });
+                                if (hasBeenMatch == 1){
 
-                            if (hasBeenMatch ==0){
+                                    hasBeenMatch= 0;
+                                    return false;
 
-                                alert("proofComplete");
-                                return false;
+                                }
 
-                            }
-                            if (hasBeenMatch == 1){
 
-                            hasBeenMatch= 0;
-                            return false;
+                                }
 
-                            }
+
 
                       // }
                 

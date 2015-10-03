@@ -46,12 +46,6 @@
 }
 
 
-[id='rule 0']{
-
-border-width: 16px;
-border-color: black;
-
-}
 
 
 [id^='sequent']{
@@ -253,6 +247,13 @@ button{
 }
 
 
+[id='rule 0']{
+
+border-style: solid;
+border-width: 4px;
+border-color: black;
+
+}
 
 /*@media handheld {
 

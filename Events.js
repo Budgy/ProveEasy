@@ -73,6 +73,12 @@ $(document).ready(function(){
 
 		else if ($(this).is("[id ^= 'show']")&& givenRuleSelected == 0){ // if a show statement is selected before a given rule has been chose
 
+		if (givenRuleSelected.length != 0){ // if a show statement is selected before a given rule has been chose
+
+			givenCurrentlySelected = [];
+
+		}
+
 			idForThis = event.target.id;
 
 			showSelected = event.target.id.split("show")[1];
@@ -90,7 +96,7 @@ $(document).ready(function(){
 
 				if (document.getElementById(event.target.id).style.fill == "rgb(165, 42, 42)"){
 
-					document.getElementById(event.target.id).style.fill = "yellow";
+					document.getElementById(event.target.id).style.fill = "orange";
 
 					//remove given from selection
 					var index = givenCurrentlySelected.indexOf(document.getElementById(event.target.id));
@@ -112,7 +118,7 @@ $(document).ready(function(){
 
 				if (document.getElementById(event.target.id).style.backgroundColor == "rgb(165, 42, 42)"){
 
-					document.getElementById(event.target.id).style.backgroundColor = "yellow";
+					document.getElementById(event.target.id).style.backgroundColor = "orange";
 
 					//remove given from selection
 					var index = givenCurrentlySelected.indexOf(document.getElementById(event.target.id));
