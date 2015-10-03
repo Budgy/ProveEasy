@@ -80,11 +80,11 @@ function visualiseProofTree(proofTree){
 				
 				
 
-				if (node.model.activeBranch ==1&& node.model.completeBranch == 0){//if the node is active make it yellow and not complete
+				if (node.model.activeBranch ==1&& node.model.completeBranch == 0){//if the node is active make it orange and not complete
 
-					give.style.backgroundColor = "yellow";
+					give.style.backgroundColor = "orange";
 				}
-				if (node.model.completeBranch == 1){//if the node is active make it yellow and complete
+				if (node.model.completeBranch == 1){//if the node is active make it grey and complete
 
 
 					give.style.backgroundColor = "grey";
@@ -147,6 +147,7 @@ function visualiseProofTree(proofTree){
 function displayRules () {// display the rules/commands
 
 	$("[id^='button']").show();
+	$("[id^='bitNextToAdvice']").show();
 
 	if(document.getElementById("rules")){
 		//remove it

@@ -137,7 +137,7 @@ function displayTree(tree) {// takes a tree and prints it as a string with appro
 
             }
 
-        }else if ((["P","Q","R"].indexOf(node.model.value) > -1) && node.children.length == 1){
+        }else if ((["P","Q","R", "L"].indexOf(node.model.value) > -1) && node.children.length == 1){
 
 
             if(node.model.type == "operator"&&operator ==""){

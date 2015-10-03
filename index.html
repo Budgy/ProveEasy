@@ -48,9 +48,11 @@
         <script type="text/javascript" src="Display.js"></script>
         <script type="text/javascript" src="Substitute.js"></script>
         <script type="text/javascript" src= "graphView.js"></script>
+        <script type="text/javascript" src= "Spinner.js"></script>
         <script type="text/javascript" src= "d3.min.js"></script>
         <script type="text/javascript" src= "Parser.js"></script>
         <script type="text/javascript" src="ControlFunctionAndTreeInsertion.js"></script>
+        <script type="text/javascript" src="proofAssistant.js"></script>
 		<script type="text/javascript">
 		
 		
@@ -94,19 +96,22 @@
 	</head>
 	<body>
 			<h3 id = "proveEasyTitle">ProveEasy</h3>
+			
 
 
-			<div>
+			<div id= "getStartedButtonContainer">
 			<button id = "getStarted" onClick="firstTimeStartUp();">GetStarted</button>
 			</div>
 
-
+		<span id = "buttonsId">
 
 			<button id = "button1" onClick="showProblems();">Click for List of Problems</button>
 			<button id = "button2" onClick="toggleView(proofTree);">Toggle view</button>
 			<button id = "button3" onClick="toggleRulesVisibility();">hide commands</button>
+			<button id = "button4" onClick="proofAssistant(proofTree, currentCommandSelected);">get advice</button>
+			<p id = "bitNextToAdvice">Advice: </p>
 			
             
-        </div>
+        </span>
 	</body>
 </html>

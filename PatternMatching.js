@@ -495,17 +495,17 @@ function nodeMatching(patternSeq, instanceSeq, type){
                 //check if these pattern variables have already been bound
 
 
-                patternSeq.Givens[i].walk(function (node) {//get variables in pattern
-                    // Halt the traversal by returning false
+                // patternSeq.Givens[i].walk(function (node) {//get variables in pattern
+                //     // Halt the traversal by returning false
 
-                    if(node.type =="variable"){
+                //     if(node.type =="variable"){
 
-                        variablesOfSequent.push(node.model.value);
+                //         variablesOfSequent.push(node.model.value);
 
-                    }
+                //     }
 
 
-                });
+                // });
 
                 //see if they have already been seen
                 var variablesSeen = {};

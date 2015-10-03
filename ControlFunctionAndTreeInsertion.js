@@ -52,37 +52,40 @@ function controlFunction(selectedGivens,command, proofTree){
 
                         if (GivenVariables[i].model.value == node.model.Show.model.value){// if there is a match then that branch is complete
 
-                            var lengthCheck = displayTree(GivenVariables[i]);
-                            lengthCheck = lengthCheck.replace('(', '');
-                            lengthCheck = lengthCheck.replace(')', '');
+                            var stringCheckGiven = displayTree(GivenVariables[i]);
+                            var stringCheckShow = displayTree(node.model.Show);
+                            // lengthCheck = lengthCheck.replace('(', '');
+                            // lengthCheck = lengthCheck.replace(')', '');
 
-                            if (lengthCheck != "false"){
+                            // if (lengthCheck != "false"){
                                 
-                                if(lengthCheck.length>1){
+                            //     if(lengthCheck.length>1){
+
+
+                            //         if(GivenVariables[i].children.length !=1  
+                            //                             || GivenVariables[i].model.children[0].type != 'variable'
+                            //                                         || GivenVariables[i].model.children[0].value != node.model.Show.model.children[0].value){//if it is 'Q x', 'not x', 'suc x'
+
+
+                            //         alert("not given");
+                            //         return false;
 
 
 
 
+                            //         } 
 
 
-
-                                    if(GivenVariables[i].children.length !=1  
-                                                        || GivenVariables[i].model.children[0].type != 'variable'
-                                                                    || GivenVariables[i].model.children[0].value != node.model.Show.model.children[0].value){//if it is 'Q x', 'not x', 'suc x'
-
-
-                                    alert("not given");
-                                    return false;
-
-
-
-
-                                    } 
-
-
-                                }      
+                            //     }      
                                 
                                 
+                            // }
+
+                            if (stringCheckShow != stringCheckGiven){
+
+                                alert("not given");
+                                return false;
+
                             }
                             
 
@@ -311,6 +314,7 @@ function givenControl (givenIDs, proofTree, command){
 
 
     var nodeID = [];
+    var givenMiniID = [];
     var commandTracker = command; //variable to keep track of what command was used on what so that it can then be displayed to the user
   
     for (var i =0; i<givenIDs.length;i++){
@@ -321,7 +325,8 @@ function givenControl (givenIDs, proofTree, command){
         var commandTracker = commandTracker +" "+givenSelected;
         var nodeIDTemp = givenSelected.split(".");
         
-        nodeID = nodeIDTemp[0];
+        nodeID.push(nodeIDTemp[0]);
+        givenMiniID.push(nodeIDTemp[1]);
         
     }
     
@@ -334,82 +339,83 @@ function givenControl (givenIDs, proofTree, command){
     pattern = patterns.Pattern;
     sub = patterns.Sub;
 
+    var applicableGivens = [];
 
-     proofTree.walk(function (node) {
+    proofTree.walk(function (node) {
 
-        applicableGivens = [];
+        for (var i = 0; i<nodeID.length;i++){// for each given
+
+            if (node.model.id== nodeID[i]&& node.model.activeBranch ===1){// check if id matches, and if it is active
+                
+                for (var i=0;i<node.model.Givens.length;i++){
+                    
+                    applicableGivens.push(node.model.Givens[givenMiniID[i]-1]);
+                    
+                }
+
+            }else if (node.model.id== nodeID && node.model.activeBranch ===0){//if given matches but is not an active branch
+
+                alert("given selected is not in the currently selected branch");
+                return false;
         
-        if (node.model.id== nodeID&& node.model.activeBranch ===1){
-            
-            for (var i=0;i<node.model.Givens.length;i++){
-                
-                applicableGivens[i] =node.model.Givens[nodeID[i]-1]
-                
             }
 
-                proofTree.walk(function (node2) {
-                    // Halt the traversal by returning false
-                    if (node2.model.children.length === 0 && node2.model.activeBranch ===1){// if it is a leaf and is active
 
-                         applicableShow = node2.model.Show; //get the show from it
-
-                        if (typeof applicableShow == 'string'){// if the show is a string, make it a tree
-
-                            applicableShow = stringToTree(applicableShow);
-
-                        }
-
-                        return false;
-                    }
-                });
-
-                var tree = new TreeModel();
-
-                newNode = tree.parse({// parse the new node into a tree
-        
-                Show: applicableShow, //show must be in tree form, maybe create seperate element for it?
-                Givens: applicableGivens
-                        
-                });
-
-                //carry out matching
-                matches = nodeMatching(pattern, newNode, patterns.type);
-                return false;
-
-        }
-
-        else if (node.model.id== nodeID&& node.model.activeBranch ===0){//if givens match but is not an active branch
-
-            alert("given selected is not in the currently selected branch");
-            return false;
-    
         }
 
     });
 
-        if (matches==""){
-            alert("no match with selected given");
 
-        }
-        else{
+    proofTree.walk(function (node2) {
+        // Halt the traversal by returning false
+        if (node2.model.children.length === 0 && node2.model.activeBranch ===1){// if it is a leaf and is active
 
+             applicableShow = node2.model.Show; //get the show from it
 
+            if (typeof applicableShow == 'string'){// if the show is a string, make it a tree
 
+                applicableShow = stringToTree(applicableShow);
 
-            if (patterns.type == "givenAll"){
-
-
-                givenAllControlFunctionPart1(matches, sub, command, commandTracker);
-
-
-            }else{
-
-                //sub the matches into the subNode
-                subNodes = substitute(matches, sub);
-                //insert this into the proofTree
-                insertIntoTree(subNodes, proofTree, commandTracker);
             }
-        }   
+
+            return false;
+        }
+    });
+    
+
+    var tree = new TreeModel();
+
+    newNode = tree.parse({// parse the new node into a tree
+
+    Show: applicableShow, //show must be in tree form, maybe create seperate element for it?
+    Givens: applicableGivens
+            
+    });
+
+    //carry out matching
+    matches = nodeMatching(pattern, newNode, patterns.type);
+    
+    if (matches==""){
+
+        alert("no match with selected given");
+
+    }else{
+
+
+        if (patterns.type == "givenAll"){
+
+
+            givenAllControlFunctionPart1(matches, sub, command, commandTracker);
+
+
+        }else{
+
+            //sub the matches into the subNode
+            subNodes = substitute(matches, sub);
+            //insert this into the proofTree
+            insertIntoTree(subNodes, proofTree, commandTracker);
+        }
+    }   
 
 
 

@@ -30,7 +30,8 @@ function getListOfProbs(){// get and display all problem titles
 
 
     $("[id^='button']").hide();
-
+    $("[id^='bitNextToAdvice']").hide();
+    currentCommandSelected = "";
 
 
     //check if document contains a proofTree already

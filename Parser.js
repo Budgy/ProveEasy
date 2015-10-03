@@ -49,8 +49,8 @@
         peg$c14 = { type: "literal", value: "<=", description: "\"<=\"" },
         peg$c15 = ">=",
         peg$c16 = { type: "literal", value: ">=", description: "\">=\"" },
-        peg$c17 = /^["P","Q","R"]/,
-        peg$c18 = { type: "class", value: "[\"P\",\"Q\",\"R\"]", description: "[\"P\",\"Q\",\"R\"]" },
+        peg$c17 = /^["P","Q","R", "L"]/,
+        peg$c18 = { type: "class", value: "[\"P\",\"Q\",\"R\", \"L\"]", description: "[\"P\",\"Q\",\"R\", \"L\"]" },
         peg$c19 = function(operator, right) {return {type:"operator", value:operator, children:[right]}},
         peg$c20 = "not",
         peg$c21 = { type: "literal", value: "not", description: "\"not\"" },
@@ -690,7 +690,7 @@
             s4 = peg$parsesep();
           }
           if (s3 !== peg$FAILED) {
-            s4 = peg$parseNot();
+            s4 = peg$parseSuc();
             if (s4 !== peg$FAILED) {
               peg$reportedPos = s0;
               s1 = peg$c19(s2, s4);
@@ -1079,6 +1079,6 @@
     SyntaxError: SyntaxError,
     parse:       parse
   };
-
   }
+
 

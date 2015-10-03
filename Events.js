@@ -1,15 +1,15 @@
 $(document).ready(function(){
 
 
-			var givenCurrentlySelected = [];
-			givenAllSelected = 0;
+	var givenCurrentlySelected = [];
+	givenAllSelected = 0;
+	currentCommandSelected = "";
 
 
-
-
-
+	$('#adviceContainer').delay(1000).fadeOut();
 
 	$(document).on( "click","p, pre", function(event){
+
 
 
 		if(!$(this).is("[id ^= 'givenChoice']") && givenAllSelected ==1){
@@ -84,17 +84,30 @@ $(document).ready(function(){
 		else if ($(this).is("[id ^= 'sequent']")){// if a problem formula is selected
 			
 			buttonToggle = false;
+				
+			
 			selectedProblem = document.getElementById(event.target.id).textContent;
 			//document.getElementById("goal").innerHTML= getProblem(selectedProblem);
 			removeProbsFromDoc();
-	                       
+
+			currentCommandSelected = selectedProblem;
 	        proofTree=initialiseProofTree(getProblem(selectedProblem));
 
 	        displayRules();
 	        visualiseProofTree(proofTree);
+
+	      //spinner.stop();
 	        givenRuleSelected = 0;
 
 		}
-	});
-});
 
+		
+
+
+	});
+
+		
+
+		
+    
+});
