@@ -18,7 +18,18 @@
 
 
 
+
+[id^='rule '].hover{
+
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    border-radius: 5px;
+    background-color: #666666;
+
 }
+
+
+
 [id^='rule ']:active{
 
     background-color: yellow;

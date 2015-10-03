@@ -172,6 +172,7 @@ function displayRules () {// display the rules/commands
 		var command = document.createElement("p");
 		var commandNode=document.createTextNode(key);
 		command.id= "rule "+i;
+		command.class="rule";
 		command.title = getToolTipInfo(key);
 		command.rel = "tooltip";
 		i++;

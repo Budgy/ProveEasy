@@ -128,8 +128,17 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
    var nodes = tree.nodes(root),
        links = tree.links(nodes);
 
+
+       d3.select("#graphView").attr("height", (nodes.length *180) +100);
+
    // Normalize for fixed-depth.
-   nodes.forEach(function(d) { d.y = d.depth * 180; });
+   // nodes.forEach(function(d) { d.y = d.depth * 180; });
+   nodes.forEach(function(d) { 
+
+
+    d.y = d.depth * 180; 
+
+  });
 
    // Update the nodes…
    var node = svg.selectAll("g.node")
@@ -149,9 +158,18 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
    nodeEnter.append("text")
        .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
        .attr("dy", ".35em")
+       .attr("id", function (d){return "sshow"+d.model.model.id})
        .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-       .text(function (d){return displayTree(d.model.model.Show)})
+       .text(function (d){return "Show: "+displayTree(d.model.model.Show)})
        .style("fill-opacity", 1e-6);
+
+   // nodeEnter.append("text")
+   //     .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+   //     .attr("dy", ".5em")
+   //     .attr("id", function (d){return "Given"+d.model.model.id})
+   //     .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+   //     .text(function (d){return "Given: "+displayTree(d.model.model.Given[0])})
+   //     .style("fill-opacity", 1e-6);
 
    // Transition nodes to their new position.
 
