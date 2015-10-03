@@ -59,28 +59,10 @@ function allCommands(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function getCommandPatterns(commandName){
+function getCommandPatterns(commandName){//returns the pattern for a given rule
 
     if (commandName=="showImp"){
 
@@ -750,45 +732,11 @@ function getCommandPatterns(commandName){
     }
 
     else{// command doesn't exist :S
+
         console.log("command does not exits");
         return;
     }
-
 }
-
-
-function given(){ //not finished yet
-
-    proofTree.walk(function (node) {
-        // Halt the traversal by returning false
-        if (node.model.children.length == 0 && node.model.activeBranch ==1){
-
-            selectedLeafNode = node.model.Show;
-            return false;
-        }
-    });
-
-
-    if (selectedLeafNode.type == "variable"){
-
-        previousGivens = getAllGivens(proofTree);
-
-        if ($.inArray(selectedLeafNode, previousGivens)){
-
-            thisIsTrue= 1;
-            asda =2;
-
-        }
-    }
-
-    else{
-
-        alert("not given");
-    }
-}
-
-
-
 
 
 function getAllGivens(proofTree) {// gets all givens in the active path of the tree, untested
@@ -809,75 +757,19 @@ function getAllGivens(proofTree) {// gets all givens in the active path of the t
     return allActiveGivens;
 };
 
-// #### derived rules ####
-
-//
-// Rule givenAll2 {g tm1 tm2} { # g1: givenpath tm : term to instantiate
-// Path $g
-// Given all X {all Y P}; Show Q
-// ######
-// Given [list P WITH $tm1 FOR X] WITH $tm2 FOR Y ; Show Q
-// ## Should be {P WITH $tm1 FOR X} but $ doesn't work inside { }
-// ## Bug to be fixed - use [list ] instead of { } until fixed
-// }
-//
 
 
 
 
-
-function getCommandSubPart(commandName){
+function getCommandSubPart(commandName){//returns only the sub pattern for a given rule
 
     pats = getCommandPatterns(commandName);
 
-
     subPart = pats.Sub;
-
-
 
     return subPart;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -893,48 +785,7 @@ function getCommandSubPart(commandName){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function getToolTipInfo(commandName){
+function getToolTipInfo(commandName){//description of all rules for tooltips
 
     info= ""
 

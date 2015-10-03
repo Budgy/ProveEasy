@@ -48,8 +48,7 @@
         <script type="text/javascript" src="Display.js"></script>
         <script type="text/javascript" src="Substitute.js"></script>
         <script type="text/javascript" src= "graphView.js"></script>
-        
-        <script type="text/javascript" src= "Spinner.js"></script>
+        <script type="text/javascript" src= "secondGraphView.js"></script>
         <script type="text/javascript" src= "d3.min.js"></script>
         <script type="text/javascript" src= "Parser.js"></script>
         <script type="text/javascript" src="ControlFunctionAndTreeInsertion.js"></script>
@@ -85,35 +84,14 @@
 
 			}
 
-		 //  	$(function() {
-   //  			$( document ).tooltip({});
-			// });
-
-
-			// $( "[id ^= 'proveEasyTitle']" ).tooltip({
-			// 	content: "Awesome title!"
-			// });
-
-
-
 		</script>
 	</head>
 	<body>
 			<h3 id = "proveEasyTitle">ProveEasy</h3>
 			
-
-
 			<div id= "getStartedButtonContainer">
-			<button id = "getStarted" onClick="firstTimeStartUp();">GetStarted</button>
+				<button id = "getStarted" onClick="firstTimeStartUp();">GetStarted</button>
 			</div>
-
-<!-- 
-			<div id = "submitBox">
-			<textarea id = "submitBoxContent" rows="10" cols="150" readonly></textarea>
-			<button onClick="$("#submitBox").hide();">Close</button>
-			</div>
- -->
-
 
 			<div id = "submitBox" hidden="true" >
 				<p>
@@ -121,10 +99,6 @@
 	  				<textarea display="none" id = "box"  readonly="readonly" cols="100" rows="15" overflow="hidden" ></textarea>
 				</p>
      		 </div>
-
-
-
-
 
 
 		<span id = "buttonsId">

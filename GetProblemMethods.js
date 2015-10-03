@@ -1,6 +1,4 @@
-function getProblemTree(problem) {
-
-    //ProblemParser= PEG.buildParser("start = sep* All:All sep* {return All} All = sep* operator:\"All\" sep* xValue: AND sep* pValue: AND {return {type:\"operator\",value:operator, children:[xValue, pValue]}} /AND AND= left:implication sep* operator:\"&\" sep* right:AND {return {type:\"operator\", value:operator, children:[left,right]}} /implication implication = left:OR sep* operator:\"->\" sep* right:implication{return {type:\"operator\", value:operator, children:[left,right]}}/OR OR =  left:Not  sep* operator:\"|\" sep* right:OR{return {type:\"operator\", value:operator, children:[left,right]}}/Not Not = sep* operator:\"¬\" sep* right:primary{return {type:\"operator\", value:operator, children:[right]}}/primary primary  = letter:letter{return {type:\"variable\", value:letter}}/ \"{\" sep* All:All sep* \"}\" {return All}/\"(\" sep* All:All sep* \")\" {return All} sep = spaces:[' ',\\t,\\r,\\n] letter  = letters:[A-Za-z]");
+function getProblemTree(problem) {//return the tree when given a string
 
     Result = parse(problem);
     tree = new TreeModel();
@@ -10,30 +8,27 @@ function getProblemTree(problem) {
 }
 
 
-function getProblem(Title){// get the goal for a specific problem
+function getProblem(Title){//get the elements for a specific problem
 
     return Problems[Title];
 }
 
 function removeProbsFromDoc(){
 
-    for (i = 0; i<length; i++){
-
+    for (i = 0; i<length; i++){//remove all problem title elements
 
         $( "[id^='sequent']" ).remove();
         $( "#instructionsSequent" ).remove();
 
     }
-
 }
 
-function getListOfProbs(){// get and display all problem titles
+function getListOfProbs(){//get and display all problem titles
 
-
+    //hide buttons
     $("[id^='button']").hide();
     $("[id^='bitNextToAdvice']").hide();
     currentCommandSelected = "";
-
 
     //check if document contains a proofTree already
     if(document.getElementById("entireProofSoFar")){
@@ -44,21 +39,18 @@ function getListOfProbs(){// get and display all problem titles
         //remove it
         document.body.removeChild(document.getElementById("graphView"));
     }
-
-
     if(document.getElementById("rules")){
         //remove it
         document.body.removeChild(document.getElementById("rules"));
     }
 
 
-
+    //create new elements
     var probTitle = document.createElement("p")
     var text=document.createTextNode("Please select a problem");
         probTitle.id= "instructionsSequent";
         probTitle.appendChild(text);
         document.body.appendChild(probTitle);
-
 
     for (i = 0; i<length; i++){
 
@@ -68,5 +60,4 @@ function getListOfProbs(){// get and display all problem titles
         prob.appendChild(node);
         document.body.appendChild(prob);
     }
-
 }
