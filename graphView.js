@@ -132,17 +132,21 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
        d3.select("#graphView").attr("height", (nodes.length *180) +100);
 
    // Normalize for fixed-depth.
-   // nodes.forEach(function(d) { d.y = d.depth * 180; });
-   nodes.forEach(function(d) { 
+   nodes.forEach(function(d) { d.y = d.depth * 180; });
 
 
-    d.y = d.depth * 180; 
 
-  });
+
+
+
+   var numberOfGraphGivens ={};
 
    // Update the nodes…
    var node = svg.selectAll("g.node")
-       .data(nodes, function(d) { return d.id || (d.id = ++i); });
+       .data(nodes, function(d) { numberOfGraphGivens[d.model.model.id]=d.model.model.Givens.length; return d.id || (d.id = ++i); });
+
+
+
 
    // Enter any new nodes at the parent's previous position.
    var nodeEnter = node.enter().append("g")
@@ -155,21 +159,70 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
        .style("fill", function(d) { return d._children ? "black" : "#fff"; })
        .style("stroke", "black");
 
-   nodeEnter.append("text")
-       .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-       .attr("dy", ".35em")
-       .attr("id", function (d){return "sshow"+d.model.model.id})
-       .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-       .text(function (d){return "Show: "+displayTree(d.model.model.Show)})
-       .style("fill-opacity", 1e-6);
 
-   // nodeEnter.append("text")
-   //     .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-   //     .attr("dy", ".5em")
-   //     .attr("id", function (d){return "Given"+d.model.model.id})
-   //     .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-   //     .text(function (d){return "Given: "+displayTree(d.model.model.Given[0])})
-   //     .style("fill-opacity", 1e-6);
+
+
+       var allGElements = node[0];
+
+
+
+
+       for (var gElement = 0; gElement<allGElements.length; gElement++){
+
+
+         currentSelection=  d3.select(allGElements[gElement]);
+
+          if (!allGElements[gElement].__data__.model.model.Givens.length ==0){
+
+
+            for (var given = 0; given<allGElements[gElement].__data__.model.model.Givens.length;given++){
+
+
+              //currentSelection.append("text").text("HELLOOOOOOOO");
+              //test = displayTree(allGElements[gElement].__data__.model.model.Givens[given]);
+
+              currentSelection.append("text")
+                .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+                 .attr("dy", ((-2*given)-1.5)+"em")
+                 .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+                 .text("Given: "+displayTree(allGElements[gElement].__data__.model.model.Givens[given]));
+
+
+
+
+
+
+
+              // allGElements[gElement].append("text")
+              //    .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+              //    .attr("dy", gElement+"0.5em")
+              //    .attr("id", "given"+allGElements[gElement].__data__.model.model.id)
+              //    .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+              //    .text("Given: "+displayTree(allGElements[gElement].__data__.model.model.Givens[given]));
+
+            }
+
+
+          }
+
+       }
+
+
+   nodeEnter.append("text")
+     .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+     .attr("dy", ".35em")
+     .attr("id", function (d){return "show"+d.model.model.id})
+     .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+     .text(function (d){return "Show: "+displayTree(d.model.model.Show);});
+       //.style("fill-opacity", 1e-6);
+
+
+
+
+          
+       //.style("fill-opacity", 1e-6);
+
+
 
    // Transition nodes to their new position.
 
