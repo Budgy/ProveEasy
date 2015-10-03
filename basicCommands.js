@@ -41,6 +41,7 @@ function allCommands(){
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         givenImpFwd:"",
+        givenAll:"",
 
 
         // Rule givenImpFwd {g1 g2} {
@@ -650,22 +651,41 @@ function getCommandPatterns(commandName){
         return pats;
     }
 
-    /*                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    else if (commandName=="showImp"){
+    else if (commandName=="givenAll"){
 
-        var pats=
+       var pats={
 
+            type: "givenAll",
 
-
-
-
-
+            Pattern:{
+                Givens: [stringToTree("All x p")],
+                Show: stringToTree("q"),
+            },
+            Sub:[
+                {
+                    Givens:["p with term for x"],
+                    Show: "q",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
 
         return pats;
     }
 
-                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Rule givenAll {g tm} { # g1: givenpath tm : term to instantiate
+//         Path $g
+//     Given all X P; Show Q
+//     ######
+//     Given P WITH $tm FOR X; Show Q
+//     }
+
+
+   /*                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     else if (commandName=="showImp"){
 
@@ -821,4 +841,15 @@ function getAllGivens(proofTree) {// gets all givens in the active path of the t
 
 
 
+function getCommandSubPart(commandName){
 
+    pats = getCommandPatterns(commandName);
+
+
+    subPart = pats.Sub;
+
+
+
+    return subPart;
+
+}

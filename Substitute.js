@@ -116,3 +116,194 @@ function replaceVariableInTree(matches, variable){
 
 
 }
+
+
+function givenAllControlFunctionPart1(matches, commandSubNode, commandName){//special function for given all rule
+
+
+
+    if (jQuery.isEmptyObject(matches)){
+
+        console.log("givenMatches is empty");
+        return;
+    }
+
+    if (jQuery.isEmptyObject(commandSubNode)){
+
+        console.log("commandSubNode is empty");
+        return;
+    }
+
+    for (var i =0; i<commandSubNode.length;i++){// for each node in the sub pattern
+
+        currentNode = commandSubNode[i];
+
+        for (var j =0; j<currentNode.Givens.length;j++){// for each given in each node
+
+            if(currentNode.Givens[j].indexOf("with") > -1){//if it contains "with" then it is given all and needs a term, 
+
+
+                givenAllFunction(matches, currentNode.Givens[j], commandSubNode, commandName);
+
+            
+            }
+        }
+    }
+
+
+
+
+}
+
+
+
+function givenAllControlFunctionPart2(matches, commandSubNode){
+
+    var newMatches= cloneControlFunction(matches);
+
+    for (var i =0; i<commandSubNode.length;i++){// for each node in the sub pattern
+
+        currentNode = commandSubNode[i];
+
+        for (var j =0; j<currentNode.Givens.length;j++){// for each given in each node
+
+            currentNode.Givens[j] = currentNode.Givens[j].split(" ")[0];
+            currentNode.Givens[j] = matches[currentNode.Givens[j]];
+
+        }
+    }
+
+    if (matches.hasOwnProperty(currentNode.Show)){//do the same with show
+
+        currentNode.Show = matches[currentNode.Show];
+
+        if (typeof currentNode.Show == "string"){
+
+            currentNode.Show = stringToTree(currentNode.Show);
+
+        }else{
+
+            tree = new TreeModel();
+            
+            currentNode.Show = tree.parse(currentNode.Show);
+
+
+        }
+
+
+    }
+
+
+    insertIntoTree(commandSubNode, proofTree);
+    visualiseProofTree(proofTree);
+    commandSubNode= {};
+    matches = {};
+}
+
+
+
+
+
+//matches: p:,
+//         q:,
+//         x:
+
+
+//givenString: p with term for x
+
+function givenAllFunction(matches, givenString, commandSubNode, commandName){
+
+    var newMatches= cloneControlFunction(matches);//deep clone matches to avoid altering the tree
+    
+    givenStrings = givenString.split(" ");
+
+    var subject= givenStrings[0] //p
+    var varToReplace = givenStrings[4]//x
+
+    //now create options for term
+
+    var givensThatCanBeUsed = getGivenVariablesAndCreateList(proofTree);
+
+    if(!jQuery.isEmptyObject(givensThatCanBeUsed)){//if there are choices
+
+        givenAllSelected = 1; //flag for the events handler
+        term = "";
+        
+        displayGivenAllOptions(givensThatCanBeUsed);
+
+            $(document).on( "click","p, pre", function(event){
+
+                if ($(this).is("[id ^= 'givenChoice']") && givenAllSelected ==1){ 
+
+                    var commandSubPart = getCommandSubPart(commandName);
+                    term = document.getElementById(event.target.id).textContent;
+                    givenAllSelected = 0;
+                    newMatches =  givenAllSubPart(subject, varToReplace, term, newMatches);
+
+                    givenAllControlFunctionPart2(newMatches, commandSubPart);
+                    
+                    //when selection of choice is detected
+
+                    //remove element and retoggle rules
+                    if(document.getElementById("givenChoices")){
+                        //remove it
+                        document.body.removeChild(document.getElementById("givenChoices"));
+                    }
+
+                    toggleRulesVisibility();
+
+                   
+                }
+            });
+    }
+       
+       //if not alert that there are no variables to choose from
+    else{
+
+        alert("no applicable givens");
+
+    }
+
+}
+
+
+//subject with term for varToReplace
+
+function givenAllSubPart(subject, varToReplace, term, newMatches){
+
+
+
+    //need to separate the link between matches and the original proofTree
+    newMatches= cloneControlFunction(newMatches);
+
+
+        if (typeof newMatches[subject]== "string"){//if it is not a node or tree segment
+
+            if (newMatches[subject]==newMatches[varToReplace]){
+
+                newMatches[subject]=term;
+            }
+
+        }else{ //else it is a tree so walk through, replacing as you go
+
+            tree = new TreeModel();
+            
+            newMatches[subject] = tree.parse(newMatches[subject]);
+
+            newMatches[subject].walk({strategy: 'breadth'}, function (thisNode) {
+
+                if (thisNode.model.value==newMatches[varToReplace]){
+
+                    thisNode.model.value=term;
+
+                }
+
+            });
+
+        }
+
+
+
+    return newMatches;
+
+}

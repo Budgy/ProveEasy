@@ -2,9 +2,24 @@ $(document).ready(function(){
 
 
 			var givenCurrentlySelected = [];
+			givenAllSelected = 0;
+
 
 	$(document).on( "click","p, pre", function(event){
 
+
+		if(!$(this).is("[id ^= 'givenChoice']") && givenAllSelected ==1){
+
+				givenAllSelected =0;
+			  	toggleRulesVisibility();
+			  	//remove element and retoggle rules
+				if(document.getElementById("givenChoices")){
+					//remove it
+			  		document.body.removeChild(document.getElementById("givenChoices"));
+			  	}
+
+
+		}
 
 		if ($(this).is("[id ^= 'rule']")){ //if a rule is selected
 
@@ -57,12 +72,10 @@ $(document).ready(function(){
 
 
 
-		else if ($(this).is("[id ^= 'given']")){ //if a given is selected when a given rule has been chosen
+		else if ($(this).is("[id ^= 'given']") && givenAllSelected ==0){ 
 
 			alert("cannot select a given not in the active branch");
 		}
-
-
 
 		else if ($(this).is("[id ^= 'sequent']")){// if a problem formula is selected
 			

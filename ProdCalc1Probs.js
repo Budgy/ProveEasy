@@ -17,10 +17,10 @@ Problems["andOr2"] = {Givens:[], Show:"{p|{q&r}}->{p|q}"};
 Problems["andOr3"] = {Givens:[], Show:"{p&{p->q}}->{p&q}"};
 Problems["Absorption1"] = {Givens:[], Show:"{p|{p&q}}->p"};
 Problems["Absorption2"] = {Givens:[], Show:"p->{p&{p|q}}"};
-//Problems["notNot1"] = {Givens:["p"], Show:"¬(¬p)"};
+Problems["notNot1"] = {Givens:[], Show:"not(not p)"};
 Problems["BasicAll"] = {Givens:[], Show:"{All a b}"};
+Problems["givenAllTest"] = {Givens:["All a b"], Show:"r"};
 Problems["allComm"] = {Givens:[], Show:"{All x {All y { x R y}}} -> {All y1 {All x1 { x1 R y1}}}"};
-//Problems["allComm"] = "{all x {all y {x R y}}} -> {all y1 {all x1 { x1 R y1}}}";
 //Problems["impAll1"] = "{all x {{Q x} -> {P x}}} -> { {all x {Q x}} -> {all x {P x}} }";
 
 

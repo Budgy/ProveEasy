@@ -202,18 +202,66 @@ function toggleRulesVisibility(){
 
 	if(toggleRules == false){
 
-		$("div").animate({
+		$("#rules").animate({
+	     	left:'10',
+		});
+
+		$("#rules").animate({
 	     	left:'-150',
 		});
+
+		$("#rules").hide({});
 		toggleRules=true;
 
 	}else{
 
-		$("div").animate({
+		$("#rules").show({});
+
+		$("#rules").animate({
+	     	left:'10',
+		});
+
+		$("#rules").animate({
 	     	left:'0',
 		});
 
 		toggleRules = false;
 	}
+
+}
+
+
+
+
+function displayGivenAllOptions(givensThatCanBeUsed) {
+
+	var choice = "";
+
+	//move rules out the way and create object for 
+	toggleRulesVisibility();
+
+	var display= document.createElement("div");
+	display.id= "givenChoices";
+	
+
+	document.body.appendChild(display);
+	$("#givenChoices").insertBefore("#entireProofSoFar");
+
+	var givenChoices= document.createElement("h3");
+	var choicesNode=document.createTextNode("Choices");
+	givenChoices.id= "choicesTitle";
+	givenChoices.appendChild(choicesNode);
+	document.getElementById("givenChoices").appendChild(givenChoices);
+
+
+    for (var key in givensThatCanBeUsed){
+
+    	var variableChoice = document.createElement("p");
+		var VariableNode=document.createTextNode(givensThatCanBeUsed[key]);
+		variableChoice.id= "givenChoice "+key;
+		variableChoice.appendChild(VariableNode);
+		document.getElementById("givenChoices").appendChild(variableChoice);
+
+    }
 
 }

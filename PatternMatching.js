@@ -463,7 +463,7 @@ function nodeMatching(patternSeq, instanceSeq, type){
         }
 
     }
-    else if (type == "given"){
+    else if (type == "given" || type == "givenAll"){
 
         //get show matches
         showMatch = match(patternSeq.Show, instanceSeq.model.Show);

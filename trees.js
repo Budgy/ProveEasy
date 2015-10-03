@@ -124,7 +124,7 @@ function displayTree(tree) {// takes a tree and prints it as a string with appro
                 return false;
             
 
-        }else if (["¬","Suc"].indexOf(node.model.value) > -1){
+        }else if (["not","Suc"].indexOf(node.model.value) > -1){
 
 
             if(node.model.type == "operator"&&operator ==""){
@@ -546,19 +546,33 @@ function clone(obj) {
 
         if (obj.hasOwnProperty("children")&&obj.hasOwnProperty("model")){
 
+            if(obj.children.length>0){
 
-            for (var i =0; i<obj.model.children.length;i++){
 
-                children.push(clone(obj.model.children[i]));
+                for (var i =0; i<obj.model.children.length;i++){
+
+                    children.push(clone(obj.model.children[i]));
+                }
+
+
+                copy = {
+                    value: obj.model.value,
+                    type:obj.model.type,
+                    children: children
+                    
+                };
+
+            }else{
+
+                copy = {
+                    value: obj.model.value,
+                    type:obj.model.type,
+                    
+                };
+
             }
 
 
-            copy = {
-                value: obj.model.value,
-                type:obj.model.type,
-                children: children
-                
-            };
 
 
         }else{
@@ -597,22 +611,85 @@ function clone(obj) {
 
 function cloneControlFunction(object){
 
-//object is matches, iterate through each, cloning them as you go and adding them to the new copy
-var copy={};
+    //object is matches, iterate through each, cloning them as you go and adding them to the new copy
+    var copy={};
 
-for(var key in object) {
-        if(object.hasOwnProperty(key)) {
-            copy[key] = clone(object[key]);
+    for(var key in object) {
+            if(object.hasOwnProperty(key)) {
+                copy[key] = clone(object[key]);
+            }
+    }
+
+
+    return copy;
+
+}
+
+
+function cloneControlFunctionSubNode(object){
+
+    //object is matches, iterate through each, cloning them as you go and adding them to the new copy
+    var copy={};
+
+    for(var key in object) {
+            if(object.hasOwnProperty(key)) {
+
+
+                if (typeof object[key] == 'object'){
+
+                    copy[key] = clone(object[key]);
+
+
+                }else if(typeof object[key] == 'string' ){
+
+                    copy[key] = object[key];
+
+                }
+            }
+    }
+
+
+    return copy;
+
+}
+
+
+
+
+function getGivenVariablesAndCreateList(proofTree){// returns a list of given variables that are only 1 variable long e.g. a, a_, a1_
+
+    var appropriateGivens={};
+
+    proofTree.walk(function (node){
+
+        for (var given=0; given<node.model.Givens.length;given++){
+
+            if(node.model.Givens[given].model.value.length==1 
+                || node.model.Givens[given].model.value.length==2  && node.model.Givens[given].model.value.endsWith("_")
+                    ||node.model.Givens[given].model.value.length==3  &&node.model.Givens[given].model.value.endsWith("1_")){
+
+
+                appropriateGivens[node.model.id]=node.model.Givens[given].model.value;
+
+            }
+
         }
-}
 
 
-return copy;
+    });
 
-
-
-
-
-
+    return appropriateGivens;
 
 }
+
+
+
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
+
+String.prototype.startsWith = function(needle)
+{
+    return(this.indexOf(needle) == 0);
+};

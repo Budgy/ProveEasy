@@ -282,12 +282,12 @@ function controlFunction(selectedGivens,command, proofTree){
         insertIntoTree(subNodes, proofTree);
     }
 
-    else if (patterns.type == "given"){// if a given rule is chosen
+    else if (patterns.type.startsWith("given")){// if a given rule is chosen
 
 
         if  (selectedGivens.length<1){
             alert("no given selected");
-            return
+            return;
 
 
         }
@@ -352,11 +352,6 @@ function givenControl (givenIDs, proofTree, command){
                 applicableGivens[i] =node.model.Givens[nodeID[i]-1]
                 
             }
-            
-            
-            
-            
-            
 
                 proofTree.walk(function (node2) {
                     // Halt the traversal by returning false
@@ -404,11 +399,22 @@ function givenControl (givenIDs, proofTree, command){
         }
         else{
 
-            //sub the matches into the subNode
-            subNodes = substitute(matches, sub);
-            //insert this into the proofTree
-            insertIntoTree(subNodes, proofTree);
 
+
+
+            if (patterns.type == "givenAll"){
+
+
+                givenAllControlFunctionPart1(matches, sub, command);
+
+
+            }else{
+
+                //sub the matches into the subNode
+                subNodes = substitute(matches, sub);
+                //insert this into the proofTree
+                insertIntoTree(subNodes, proofTree);
+            }
         }   
 
 

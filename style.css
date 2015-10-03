@@ -2,13 +2,24 @@
     width: 150px;
     float:left; /* add this */
     border: 1px solid red;
+    background-color: white;
     position: relative;
+    z-index: 999;
 }
+#givenChoices{
+    width: 150px;
+    float:left; /* add this */
+    border: 1px solid red;
+    position: relative;
+    z-index: 99;
+}
+
 
 #entireProofSoFar{
     border: 1px solid green;
     overflow: hidden; /* if you don't want #second to wrap below #first */
     position: relative;
+    z-index: 9;
 }
 #proveEasyTitle{
 
