@@ -194,20 +194,26 @@ String.prototype.endsWith = function(suffix) {
 
 
 
-function selectGiven(givenID, proofTree){
+
+toggleRules = false;
+
+function toggleRulesVisibility(){
 
 
+	if(toggleRules == false){
 
+		$("div").animate({
+	     	left:'-150',
+		});
+		toggleRules=true;
 
+	}else{
 
+		$("div").animate({
+	     	left:'0',
+		});
 
-
-
-
-
-
-
-
-
+		toggleRules = false;
+	}
 
 }

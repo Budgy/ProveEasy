@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+	<link rel="stylesheet" href="style.css">
 
 	<head>
 		<style>
@@ -27,6 +28,8 @@
 			}
 
 		</style>
+
+
 	
 		<title>ProveEasy</title>
 		<script type="text/javascript" src="cordova-1.9.0.js"></script>
@@ -62,9 +65,10 @@
 		</script>
 	</head>
 	<body>
-			<h3>ProveEasy</h3>
+			<h3 id = "proveEasyTitle">ProveEasy</h3>
 			<button id = "button1" onClick="showProblems();">Click for List of Problems</button>
 			<button id = "button2" onClick="toggleView(proofTree);">Toggle view</button>
+			<button id = "button3" onClick="toggleRulesVisibility();">hide commands</button>
 			
             
         </div>
