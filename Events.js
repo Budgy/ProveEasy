@@ -1,7 +1,11 @@
 $(document).ready(function(){
 
+
+			var givenCurrentlySelected = [];
+
 	$(document).on( "click","p, pre", function(event){
-		
+
+
 		if ($(this).is("[id ^= 'rule']")){ //if a rule is selected
 
 			givenRuleSelected = 0;
@@ -9,7 +13,8 @@ $(document).ready(function(){
 			ruleSelected = document.getElementById(event.target.id).textContent;
 
 
-			controlFunction(ruleSelected, proofTree);
+			controlFunction(givenCurrentlySelected, ruleSelected, proofTree);
+			givenCurrentlySelected = [];
 
 
 			visualiseProofTree(proofTree);
@@ -17,16 +22,6 @@ $(document).ready(function(){
 			//tell control function
 
 		}
-
-
-
-		else if ($(this).is("[id ^= 'show']")&& givenRuleSelected == 1){// if a show statement is selected after a given rule has been chosen
-
-			alert("cannot apply rule to a show");
-			
-		}
-
-
 
 		else if ($(this).is("[id ^= 'show']")&& givenRuleSelected == 0){ // if a show statement is selected before a given rule has been chose
 
@@ -38,19 +33,34 @@ $(document).ready(function(){
 
 
 
+		else if ($(this).is("[id ^= '1given']") && givenRuleSelected == 0){ //if a given is selected when a given rule has been chosen
 
-		else if ($(this).is("[id ^= 'given']") && givenRuleSelected == 1){ //if a given is selected when a given rule has been chosen
+			if (document.getElementById(event.target.id).style.backgroundColor == "rgb(165, 42, 42)"){
 
+				document.getElementById(event.target.id).style.backgroundColor = "yellow";
 
-			givenSelected = document.getElementById(event.target.id).textContent;
+				//remove given from selection
+				var index = givenCurrentlySelected.indexOf(document.getElementById(event.target.id));
+				if (index > -1) {
+				    givenCurrentlySelected.splice(index, 1);
+				}
 
-			continueControl(givenSelected,proofTree, ruleSelected);
-			
-			visualiseProofTree(proofTree);
+			}
+			else {
 
+				document.getElementById(event.target.id).style.backgroundColor = "brown";
+				givenCurrentlySelected.push(document.getElementById(event.target.id));
+			}
 
 		}
 
+
+
+
+		else if ($(this).is("[id ^= 'given']")){ //if a given is selected when a given rule has been chosen
+
+			alert("cannot select a given not in the active branch");
+		}
 
 
 

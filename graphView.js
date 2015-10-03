@@ -1,4 +1,4 @@
-function makeGraph(textProofTree){
+function makeGraph(textProofTree, scale){
 
 /////////////////////////////////////////////////forcegraph////////////////////////////////////////////
 // var width = 960,
@@ -73,8 +73,8 @@ function makeGraph(textProofTree){
 
 
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
-     width = 960 - margin.right - margin.left,
-     height = 800 - margin.top - margin.bottom;
+    width = $(window).width(),
+    height = $(window).height();
     
  var i = 0,
      duration = 750,
@@ -86,11 +86,12 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
  var diagonal = d3.svg.diagonal();
 
  var svg = d3.select("body").append("svg")
-     .attr("width", width + margin.right + margin.left)
-     .attr("height", height + margin.top + margin.bottom)
+     .attr("width", width)
+     .attr("height", height)
      .attr("id", "graphView")
-   .append("g")
-     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     .append("g")
+     .attr("id", "graph")
+     .attr("transform", "translate(" + 0 + "," + margin.top + "), scale(" +scale+")");
 
     //var root = textProofTree;
 
@@ -103,7 +104,7 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
 
 
 
-   root.x0 = height / 2;
+   root.x0 = 0;
    root.y0 = 0;
 
    function collapse(d) {
@@ -298,7 +299,8 @@ function toggleView(proofTree){
 	  	// var tree = new TreeModel();
     	
     // 	proofTree = tree.parse(proofTree);
-	  	makeGraph(proofTree);
+	  	makeGraph(proofTree,0.5);
+      flag = 0;
 	  	
 	}
 	else if(document.getElementById("graphView")){//if graph veiw currently
@@ -313,5 +315,35 @@ function toggleView(proofTree){
 
 
 
+
+}
+
+
+
+function zoomGraph(value){
+
+  if(document.getElementById("graphView")){//if graph veiw currently
+
+    document.body.removeChild(document.getElementById("graphView"));
+
+    if (flag){
+
+      makeGraph(proofTree,0.5);
+      flag = 0;
+
+    }else{
+
+      makeGraph(proofTree,1.5);
+      flag = 1;
+    }
+
+    
+  }
+  else{
+
+
+    alert("no graph to zoom");
+
+  }
 
 }

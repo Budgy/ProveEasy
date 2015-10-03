@@ -65,8 +65,15 @@ function visualiseProofTree(proofTree){
    				givenText = id+"."+j+"    Given "+ displayTree(givens[l]);
 
 				var givenNode=document.createTextNode(indent+givenText);
+				if (node.model.activeBranch ==1){
+
+				give.id= "1given"+ id +"."+j;
+				j++;
+
+				}else{
 				give.id= "given"+ id +"."+j;
 				j++;
+				}
 
 				give.appendChild(givenNode);
 				
@@ -179,3 +186,28 @@ function displayRules () {// display the rules/commands
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
+
+
+
+
+
+
+
+
+function selectGiven(givenID, proofTree){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

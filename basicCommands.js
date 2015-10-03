@@ -1,117 +1,485 @@
 function allCommands(){
 
-	 var commandsList={
+    var commandsList={
 
-		showImp:{
+        showImp:{
 
-			type: "show",
+            type: "show",
 
-			Pattern:{
-				Givens: "",
-				Show: stringToTree("p -> q"),
-			},
-			Sub:[{
-				Givens:["p"],
-				Show: "q",
-				children: [],
-				activeBranch: 1,
-				id: 0,
-				completeBranch:0
-			}]
-		},
+            Pattern:{
+                Givens: "",
+                Show: stringToTree("p -> q"),
+            },
+            Sub:[{
+                Givens:["p"],
+                Show: "q",
+                children: [],
+                activeBranch: 1,
+                id: 0,
+                completeBranch:0
+            }]
+        },
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		givenImp:{
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        givenImp:{
 
-			type: "given",
+            type: "given",
 
-			Pattern:{
-				Givens: stringToTree("p -> q"),
-				Show: stringToTree("r"),
-			},
-			Sub:[
+            Pattern:{
+                Givens: [stringToTree("p -> q")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
 
-			{
-				Givens:[],
-				Show: "p",
-				children: [],
-				activeBranch: 1,
-				id:0,
-				completeBranch:0
-			},
-			{
-				Givens:["q"],
-				Show: "r",
-				children: [],
-				activeBranch: 0,
-				id: 0,
-				completeBranch:0
-			}]
-		},
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id:0,
+                    completeBranch:0
+                },
+                {
+                    Givens:["q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 0,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		givenAnd:{
+        givenAnd:{
 
-			type: "given",
+            type: "given",
 
-			Pattern:{
-				Givens: stringToTree("p & q"),
-				Show: stringToTree("r"),
-			},
-			Sub:[
-			{
-				Givens:["p","q"],
-				Show: "r",
-				children: [],
-				activeBranch: 1,
-				id: 0,
-				completeBranch:0
-			}]
-		},
+            Pattern:{
+                Givens: [stringToTree("p & q")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["p","q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		showAnd:{
+        showAnd:{
 
-			type: "show",
+            type: "show",
 
-			Pattern:{
-				Givens: "",
-				Show: stringToTree("p & q"),
-			},
-			Sub:[
+            Pattern:{
+                Givens: "",
+                Show: stringToTree("p & q"),
+            },
+            Sub:[
 
-			{
-				Givens:[],
-				Show: "p",
-				children: [],
-				activeBranch: 1,
-				id: 0,
-				completeBranch:0
-			},
-			{
-				Givens:[],
-				Show: "q",
-				children: [],
-				activeBranch: 0,
-				id: 0,
-				completeBranch:0
-			}]
-		},
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                },
+                {
+                    Givens:[],
+                    Show: "q",
+                    children: [],
+                    activeBranch: 0,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		given:{
+        given:{
 
-			type:"complete"
-
-
-		}
+            type:"complete"
 
 
-	};
-	return commandsList
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        givenOr:{
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("p | q")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["p"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                },
+                {
+                    Givens:["q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 0,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        showOr1:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: "",
+                Show: stringToTree("p | q"),
+            },
+            Sub:[
+
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        showOr2:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: "",
+                Show: stringToTree("p | q"),
+            },
+            Sub:[
+
+                {
+                    Givens:[],
+                    Show: "q",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        showAll:{
+
+            type: "showAll",
+
+            Pattern:{
+                Givens: "",
+                Show: stringToTree("All x q"),
+            },
+            Sub:[
+
+                {
+                    Givens:["x"],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        givenImpFwd:{
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("p -> q"),stringToTree("p")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+
+        // Rule givenImpFwd {g1 g2} {
+        // Path $g1 $g2
+        // Given PP -> QQ
+        // Given PP
+        // Show RR
+        // ######
+        // Given QQ
+        // Show RR
+        // }
+        // 
+        // 
+        // Rule showImpBack {g} {
+        // Path $g
+        // Given PP -> RR
+        // Show RR
+        // ######
+        // Show PP
+        // }   
+
+        showImpBack:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: [stringToTree("p -> r")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+
+
+        // Rule givenImpFwd2 {g1 g2 g3} {
+        // Path $g1 $g2 g3
+        // Given {PP1 & PP2} -> QQ
+        // Given PP1
+        // Given PP2
+        // Show RR
+        // ######
+        // Given QQ
+        // Show RR
+        // }
+
+
+        givenImpFwd2:{
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("(p&d)-> q"),stringToTree("p"),stringToTree("d")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+        // Rule showImpBack2 {g} {
+        // Path $g
+        // Given {PP & QQ} -> RR
+        // Show RR
+        // ######
+        // Show PP
+        // Show QQ
+        // }
+
+        showImpBack2:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: [stringToTree("(p&d) -> r")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                },
+                {
+                    Givens:[],
+                    Show: "q",
+                    children: [],
+                    activeBranch: 0,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        givenNot:{
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("¬p")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["p->false"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+        
+        
+         showNot:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("¬p"),
+            },
+            Sub:[
+                {
+                    Givens:["p"],
+                    Show: "false",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+        
+        contradiction:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("p"),
+            },
+            Sub:[
+                {
+                    Givens:["¬p"],
+                    Show: "false",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+        
+        showLeqSuc:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("(suc x)<= (suc y)"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: "x<=y",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+        
+        showGeqSuc:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("(suc x) >= (suc y)"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: "x>=y",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+        
+        natShowSuc:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("(suc x)= (suc y)"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: "x=y",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+        showEqSwap:{
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("x = y"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: "y=x",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        },
+
+        
+        
+
+
+
+
+    };
+    return commandsList;
 }
 
 
@@ -123,51 +491,49 @@ function allCommands(){
 
 function getCommandPatterns(commandName){
 
-	commandsList = allCommands(); // get list of commands
+    commandsList = allCommands(); // get list of commands
 
-	if (commandsList.hasOwnProperty(commandName)){// if the selected command is in the list then return the patterns
+    if (commandsList.hasOwnProperty(commandName)){// if the selected command is in the list then return the patterns
 
-		return commandsList[commandName];
+        return commandsList[commandName];
 
-	}
-	else{// command doesn't exist :S
-
-		console.log("command does not exits");
-		return;
-	}
+    }
+    else{// command doesn't exist :S
+        console.log("command does not exits");
+        return;
+    }
 
 }
 
-		
+
 function given(){ //not finished yet
 
-	proofTree.walk(function (node) {
-	    // Halt the traversal by returning false
-	    if (node.model.children.length == 0 && node.model.activeBranch ==1){
+    proofTree.walk(function (node) {
+        // Halt the traversal by returning false
+        if (node.model.children.length == 0 && node.model.activeBranch ==1){
 
-	    	selectedLeafNode = node.model.Show;
+            selectedLeafNode = node.model.Show;
+            return false;
+        }
+    });
 
-	    	return false;
-	    }
-	});
 
+    if (selectedLeafNode.type == "variable"){
 
-	if (selectedLeafNode.type == "variable"){
+        previousGivens = getAllGivens(proofTree);
 
-		previousGivens = getAllGivens(proofTree);
+        if ($.inArray(selectedLeafNode, previousGivens)){
 
-		if ($.inArray(selectedLeafNode, previousGivens)){
+            thisIsTrue= 1;
+            asda =2;
 
-			thisIsTrue= 1
-			asda =2
+        }
+    }
 
-		}
-	}
+    else{
 
-	else{
-
-		alert("not given");
-	}
+        alert("not given");
+    }
 }
 
 
@@ -176,68 +542,35 @@ function given(){ //not finished yet
 
 function getAllGivens(proofTree) {// gets all givens in the active path of the tree, untested
 
-	allActiveGivens = [];
+    allActiveGivens = [];
 
-	proofTree.walk(function (node) {
-	    // Halt the traversal by returning false
-	    if (node.model.activeBranch === 1){
+    proofTree.walk(function (node) {
+        // Halt the traversal by returning false
+        if (node.model.activeBranch === 1){
 
-	    	for (var i = 0; i< node.model.Givens.length; i++){
+            for (var i = 0; i< node.model.Givens.length; i++){
 
-	    	allActiveGivens.push(node.model.Givens[i])
-	    	}
-	    }
-	});
+                allActiveGivens.push(node.model.Givens[i])
+            }
+        }
+    });
 
-	return allActiveGivens;
+    return allActiveGivens;
 };
 
-	// Rule showImp {} {
-	// Show P -> Q
-	// #####
-	// Given P; Show Q
-	// }
-
-	// Rule givenImp {g} {
-	// Path $g
-	// Given P -> Q; Show R
-	// #####
-	// Show P
-	// Given Q; Show R
-	// }
-		
-	
-	
-	
-// Rule givenAnd {g} {
-// Path $g
-// Given P & Q; Show R
-// #####
-// Given P; Given Q; Show R
-// }
-//
-
-//
-// Rule givenAll {g tm} { # g1: givenpath tm : term to instantiate
-// Path $g
-// Given all X P; Show Q
-// ######
-// Given P WITH $tm FOR X; Show Q
-// }
-//
-// Rule showAnd {} {
-// Show P & Q
-// #####
-// Show P
-// Show Q
-// }
-//
 // Rule showImp {} {
 // Show P -> Q
 // #####
 // Given P; Show Q
 // }
-//		
+
+// Rule givenImp {g} {
+// Path $g
+// Given P -> Q; Show R
+// #####
+// Show P
+// Given Q; Show R
+// }
 //
 // Rule showAll {} {
 // Show all X P
@@ -247,43 +580,7 @@ function getAllGivens(proofTree) {// gets all givens in the active path of the t
 // }
 //
 // #### derived rules ####
-//
-// Rule givenImpFwd {g1 g2} {
-// Path $g1 $g2
-// Given PP -> QQ
-// Given PP
-// Show RR
-// ######
-// Given QQ
-// Show RR
-// }
-//
-// Rule givenImpFwd2 {g1 g2 g3} {
-// Path $g1 $g2 g3
-// Given {PP1 & PP2} -> QQ
-// Given PP1
-// Given PP2
-// Show RR
-// ######
-// Given QQ
-// Show RR
-// }
-//
-// Rule showImpBack {g} {
-// Path $g
-// Given PP -> RR
-// Show RR
-// ######
-// Show PP
-// }
-// Rule showImpBack2 {g} {
-// Path $g
-// Given {PP & QQ} -> RR
-// Show RR
-// ######
-// Show PP
-// Show QQ
-// }
+
 //
 // Rule givenAll2 {g tm1 tm2} { # g1: givenpath tm : term to instantiate
 // Path $g
@@ -300,9 +597,9 @@ function getAllGivens(proofTree) {// gets all givens in the active path of the t
 // Given var X; Given var Y; Show P
 // }
 //	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
