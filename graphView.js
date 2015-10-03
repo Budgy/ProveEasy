@@ -72,16 +72,17 @@ function makeGraph(textProofTree, scale){
 
 
 
-var margin = {top: 20, right: 120, bottom: 20, left: 120},
+var margin = {top: 20, right: 0, bottom: 20, left: 0},
     width = $(window).width(),
-    height = $(window).height();
+    height = 1000;
+    //height = $(window).height();
     
  var i = 0,
      duration = 750,
      root;
 
  var tree = d3.layout.tree()
-     .size([height, width]);
+     .size([width/2+(width/8), height]);
 
  var diagonal = d3.svg.diagonal();
 
@@ -104,8 +105,8 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
 
 
 
-   root.x0 = 0;
-   root.y0 = 0;
+   root.x = 0;
+   root.y = 0;
 
    function collapse(d) {
      if (d.children) {
@@ -124,7 +125,7 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
  function update(source) {
 
    // Compute the new tree layout.
-   var nodes = tree.nodes(root).reverse(),
+   var nodes = tree.nodes(root),
        links = tree.links(nodes);
 
    // Normalize for fixed-depth.
@@ -153,9 +154,12 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
        .style("fill-opacity", 1e-6);
 
    // Transition nodes to their new position.
+
+
+   var xcoord;
    var nodeUpdate = node.transition()
        .duration(duration)
-       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+       .attr("transform", function(d) { xcoord = d.x; return "translate(" + ((d.x)) + "," + d.y + ")"; });
 
    nodeUpdate.select("circle")
        .attr("r", 4.5)
@@ -297,10 +301,18 @@ function toggleView(proofTree){
 		//remove it
 	  	document.body.removeChild(document.getElementById("entireProofSoFar"));
 	  	// var tree = new TreeModel();
-    	
+    	document.body.removeChild(document.getElementById("rules"));
     // 	proofTree = tree.parse(proofTree);
-	  	makeGraph(proofTree,0.5);
-      flag = 0;
+	  	makeGraph(proofTree,1.5);
+        //$("body").scrollTop($("#graphView").offset().top);
+        
+
+        $('html, body').animate({
+            scrollTop: ($('#graphView').offset().top)
+        },500);
+        
+        
+        //flag = 0;
 	  	
 	}
 	else if(document.getElementById("graphView")){//if graph veiw currently
@@ -309,6 +321,7 @@ function toggleView(proofTree){
 		//var tree = new TreeModel();
     	
      //	proofTree = tree.parse(proofTree);
+    displayRules();
 		visualiseProofTree(proofTree);
 		
 	}
@@ -325,7 +338,7 @@ function zoomGraph(value){
   if(document.getElementById("graphView")){//if graph veiw currently
 
     document.body.removeChild(document.getElementById("graphView"));
-
+/*
     if (flag){
 
       makeGraph(proofTree,0.5);
@@ -336,7 +349,7 @@ function zoomGraph(value){
       makeGraph(proofTree,1.5);
       flag = 1;
     }
-
+*/
     
   }
   else{

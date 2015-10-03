@@ -2,229 +2,45 @@ function allCommands(){
 
     var commandsList={
 
-        showImp:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: "",
-                Show: stringToTree("p -> q"),
-            },
-            Sub:[{
-                Givens:["p"],
-                Show: "q",
-                children: [],
-                activeBranch: 1,
-                id: 0,
-                completeBranch:0
-            }]
-        },
+        showImp:"",
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        givenImp:{
-
-            type: "given",
-
-            Pattern:{
-                Givens: [stringToTree("p -> q")],
-                Show: stringToTree("r"),
-            },
-            Sub:[
-
-                {
-                    Givens:[],
-                    Show: "p",
-                    children: [],
-                    activeBranch: 1,
-                    id:0,
-                    completeBranch:0
-                },
-                {
-                    Givens:["q"],
-                    Show: "r",
-                    children: [],
-                    activeBranch: 0,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        givenImp:"",
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        givenAnd:{
-
-            type: "given",
-
-            Pattern:{
-                Givens: [stringToTree("p & q")],
-                Show: stringToTree("r"),
-            },
-            Sub:[
-                {
-                    Givens:["p","q"],
-                    Show: "r",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        givenAnd:"",
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        showAnd:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: "",
-                Show: stringToTree("p & q"),
-            },
-            Sub:[
-
-                {
-                    Givens:[],
-                    Show: "p",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                },
-                {
-                    Givens:[],
-                    Show: "q",
-                    children: [],
-                    activeBranch: 0,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        showAnd:"",
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        given:{
-
-            type:"complete"
-
-
-        },
+        given:"",
+        
+        givenFalse:"",
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        givenOr:{
-
-            type: "given",
-
-            Pattern:{
-                Givens: [stringToTree("p | q")],
-                Show: stringToTree("r"),
-            },
-            Sub:[
-                {
-                    Givens:["p"],
-                    Show: "r",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                },
-                {
-                    Givens:["q"],
-                    Show: "r",
-                    children: [],
-                    activeBranch: 0,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        givenOr:"",
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        showOr1:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: "",
-                Show: stringToTree("p | q"),
-            },
-            Sub:[
-
-                {
-                    Givens:[],
-                    Show: "p",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        showOr1:"",
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        showOr2:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: "",
-                Show: stringToTree("p | q"),
-            },
-            Sub:[
-
-                {
-                    Givens:[],
-                    Show: "q",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        showOr2:"",
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        showAll:{
-
-            type: "showAll",
-
-            Pattern:{
-                Givens: "",
-                Show: stringToTree("All x q"),
-            },
-            Sub:[
-
-                {
-                    Givens:["x"],
-                    Show: "p",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        showAll:"",
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        givenImpFwd:{
-
-            type: "given",
-
-            Pattern:{
-                Givens: [stringToTree("p -> q"),stringToTree("p")],
-                Show: stringToTree("r"),
-            },
-            Sub:[
-                {
-                    Givens:["q"],
-                    Show: "r",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        givenImpFwd:"",
 
 
         // Rule givenImpFwd {g1 g2} {
@@ -246,24 +62,7 @@ function allCommands(){
         // Show PP
         // }   
 
-        showImpBack:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: [stringToTree("p -> r")],
-                Show: stringToTree("r"),
-            },
-            Sub:[
-                {
-                    Givens:[],
-                    Show: "p",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        showImpBack:"",
 
 
 
@@ -279,24 +78,7 @@ function allCommands(){
         // }
 
 
-        givenImpFwd2:{
-
-            type: "given",
-
-            Pattern:{
-                Givens: [stringToTree("(p&d)-> q"),stringToTree("p"),stringToTree("d")],
-                Show: stringToTree("r"),
-            },
-            Sub:[
-                {
-                    Givens:["q"],
-                    Show: "r",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        givenImpFwd2:"",
 
         // Rule showImpBack2 {g} {
         // Path $g
@@ -307,36 +89,11 @@ function allCommands(){
         // Show QQ
         // }
 
-        showImpBack2:{
-
-            type: "show",
-
-            Pattern:{
-                Givens: [stringToTree("(p&d) -> r")],
-                Show: stringToTree("r"),
-            },
-            Sub:[
-                {
-                    Givens:[],
-                    Show: "p",
-                    children: [],
-                    activeBranch: 1,
-                    id: 0,
-                    completeBranch:0
-                },
-                {
-                    Givens:[],
-                    Show: "q",
-                    children: [],
-                    activeBranch: 0,
-                    id: 0,
-                    completeBranch:0
-                }]
-        },
+        showImpBack2:""
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/*
         givenNot:{
 
             type: "given",
@@ -360,7 +117,7 @@ function allCommands(){
          showNot:{
 
             type: "show",
-
+/*
             Pattern:{
                 Givens: [],
                 Show: stringToTree("¬p"),
@@ -380,7 +137,7 @@ function allCommands(){
         contradiction:{
 
             type: "show",
-
+/*
             Pattern:{
                 Givens: [],
                 Show: stringToTree("p"),
@@ -395,6 +152,7 @@ function allCommands(){
                     completeBranch:0
                 }]
         },
+        
         
         showLeqSuc:{
 
@@ -413,6 +171,8 @@ function allCommands(){
                     id: 0,
                     completeBranch:0
                 }]
+                
+                
         },
         
         showGeqSuc:{
@@ -470,9 +230,9 @@ function allCommands(){
                     id: 0,
                     completeBranch:0
                 }]
-        },
+        }
 
-        
+        */
         
 
 
@@ -486,18 +246,477 @@ function allCommands(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 function getCommandPatterns(commandName){
 
-    commandsList = allCommands(); // get list of commands
+    if (commandName=="showImp"){
 
-    if (commandsList.hasOwnProperty(commandName)){// if the selected command is in the list then return the patterns
+        var pats={
 
-        return commandsList[commandName];
+            type: "show",
 
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("p -> q"),
+            },
+            Sub:[{
+                Givens:["p"],
+                Show: "q",
+                children: [],
+                activeBranch: 1,
+                id: 0,
+                completeBranch:0
+            }]
+        };
+
+        return pats;
     }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenImp"){
+
+        var pats={
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("p -> q")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id:0,
+                    completeBranch:0
+                },
+                {
+                    Givens:["q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 0,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenAnd"){
+
+        var pats={
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("p & q")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["p","q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showAnd"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("p & q"),
+            },
+            Sub:[
+
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                },
+                {
+                    Givens:[],
+                    Show: "q",
+                    children: [],
+                    activeBranch: 0,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="given"){
+
+        var pats={
+
+            type:"complete"
+
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="givenFalse"){
+
+        var pats={
+
+            type:"complete"
+
+
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="givenOr"){
+
+        var pats={
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("p | q")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["p"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                },
+                {
+                    Givens:["q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 0,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="showOr1"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("p | q"),
+            },
+            Sub:[
+
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="showOr2"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: [],
+                Show: stringToTree("p | q"),
+            },
+            Sub:[
+
+                {
+                    Givens:[],
+                    Show: "q",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="showAll"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: "",
+                Show: stringToTree("All x p"),
+            },
+            Sub:[
+
+                {
+                    Givens:["var x"],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="givenImpFwd"){
+
+        var pats={
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("p -> q"),stringToTree("p")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    else if (commandName=="showImpBack"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: [stringToTree("p -> r")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenImpFwd2"){
+
+        var pats={
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("(p&d)-> q"),stringToTree("p"),stringToTree("d")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["q"],
+                    Show: "r",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showImpBack2"){
+
+        var pats={
+
+            type: "show",
+
+            Pattern:{
+                Givens: [stringToTree("(p&d) -> r")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:[],
+                    Show: "p",
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0
+                },
+                {
+                    Givens:[],
+                    Show: "q",
+                    children: [],
+                    activeBranch: 0,
+                    id: 0,
+                    completeBranch:0
+                }]
+        };
+
+        return pats;
+    }
+
+    /*                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showImp"){
+
+        var pats=
+
+
+
+
+
+
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showImp"){
+
+        var pats=
+
+
+
+
+
+
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showImp"){
+
+        var pats=
+
+
+
+
+
+
+
+        return pats;
+    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="showImp"){
+
+        var pats=
+
+
+
+
+
+
+
+        return pats;
+    }
+*/
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
     else{// command doesn't exist :S
         console.log("command does not exits");
         return;

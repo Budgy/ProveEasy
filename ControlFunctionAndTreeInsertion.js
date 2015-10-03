@@ -53,13 +53,18 @@ function controlFunction(selectedGivens,command, proofTree){
                             lengthCheck = lengthCheck.replace('(', '');
                             lengthCheck = lengthCheck.replace(')', '');
 
-
-                            if(lengthCheck.length>1){
+                            if (lengthCheck != "false"){
+                                
+                                if(lengthCheck.length>1){
 
                                 alert("not given");
                                 return false;
 
                             }      
+                                
+                                
+                            }
+                            
 
                             node.model.completeBranch = 1;
 
@@ -102,7 +107,7 @@ function controlFunction(selectedGivens,command, proofTree){
             });
     }
 
-    if (patterns.type == "showAll"){ //if a show rule is selected
+  /*  if (patterns.type == "showAll"){ //if a show rule is selected
         
         
         
@@ -167,7 +172,7 @@ function controlFunction(selectedGivens,command, proofTree){
         
     }
     
-
+*/
     else if (patterns.type == "show"){ //if a show rule is selected
 
 
@@ -253,7 +258,7 @@ function controlFunction(selectedGivens,command, proofTree){
                         newShowNode = tree.parse({// parse the new node into a tree
 
                             Show: thisApplicableShow, //show must be in tree form, maybe create seperate element for it?
-                            Givens: node.model.Givens
+                            Givens: []
 
                         });
 
@@ -264,6 +269,13 @@ function controlFunction(selectedGivens,command, proofTree){
 
             }
         });
+
+        if(matches == ""){
+
+            alert("no match");
+            return;
+
+        }
 
         // substitute and then insert the new node into the proof tree
         subNodes = substitute(matches, sub);

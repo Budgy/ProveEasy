@@ -200,6 +200,23 @@ function merge_options(obj1,obj2){//merge to objects
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function nodeMatching(patternSeq, instanceSeq, type){
 
 
@@ -212,7 +229,7 @@ function nodeMatching(patternSeq, instanceSeq, type){
             //get show matches
             showMatch = match(patternSeq.Show, instanceSeq.model.Show);
 
-            if (objToString(showMatch) == ""){
+            if (jQuery.isEmptyObject(showMatch)){
 
                 //no match
                 return "";
@@ -263,12 +280,6 @@ function nodeMatching(patternSeq, instanceSeq, type){
                         }
 
                     });
-
-
-
-
-
-
 
 
                     //split here, if variable has been seen before or not
@@ -444,40 +455,6 @@ function nodeMatching(patternSeq, instanceSeq, type){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }else{
 
             showMatch = match(patternSeq.Show, instanceSeq.model.Show);
@@ -523,7 +500,7 @@ function nodeMatching(patternSeq, instanceSeq, type){
 
                     if(node.type =="variable"){
 
-                        variablesOfSequent.push(node.mode.value);
+                        variablesOfSequent.push(node.model.value);
 
                     }
 
