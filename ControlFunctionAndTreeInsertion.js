@@ -50,13 +50,13 @@ function controlFunction(selectedGivens,command, proofTree){
                     
                     for (var i =0; i<GivenVariables.length;i++){//compare the show to each given in path
 
-                        if (GivenVariables[i].model.value == node.model.Show.model.value){// if there is a match then that branch is complete
+                      //  if (GivenVariables[i].model.value == node.model.Show.model.value){// if there is a match then that branch is complete
 
                             var stringCheckGiven = displayTree(GivenVariables[i]);
                             var stringCheckShow = displayTree(node.model.Show);
                             
 
-                            if (stringCheckShow != stringCheckGiven){
+                            if (stringCheckShow != stringCheckGiven &&i ==GivenVariables.length-1){
 
                                 alert("not given");
                                 return false;
@@ -94,7 +94,7 @@ function controlFunction(selectedGivens,command, proofTree){
 
                             }
 
-                       }
+                      // }
                 
 
                     }

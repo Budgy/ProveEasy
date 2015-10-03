@@ -6,9 +6,33 @@ $(document).ready(function(){
 	currentCommandSelected = "";
 
 
+	xw = new XMLWriter('UTF-8');
+	xw.formatting = 'indented';//add indentation and newlines
+	xw.indentChar = ' ';//indent with spaces
+	xw.indentation = 2;//add 2 spaces per level
+
+	xw.writeStartDocument( );
+
+	xw.writeStartElement('events');
+
+	var eventCounter = 0;
+
+
+
+
 	$('#adviceContainer').delay(1000).fadeOut();
 
 	$(document).on( "click","p, pre, text", function(event){
+
+		eventCounter++;
+
+		xw.writeStartElement('event');
+		    xw.writeAttributeString( 'id', 'event-'+eventCounter);
+		    xw.writeAttributeString( 'selectedElementID', event.target.id );
+		    xw.writeAttributeString( 'selectedElementContent', document.getElementById(event.target.id).textContent);
+		    xw.writeAttributeString('timeStamp', Math.floor(Date.now() / 1000));
+
+ 	 	xw.writeEndElement();
 
 
 

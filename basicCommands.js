@@ -2,102 +2,37 @@ function allCommands(){
 
     var commandsList={
 
-        showImp:"",
+        given:"",
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        givenImp:"",
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        givenFalse:"",
 
         givenAnd:"",
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         showAnd:"",
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        showImp:"",
 
-        given:"",
-        
-        givenFalse:"",
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        givenImp:"",
 
         givenOr:"",
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         showOr1:"",
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         showOr2:"",
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         showAll:"",
 
         showAll2:"",
 
-        // Rule showAll2 {} {
-        // Show all X {all Y P}
-        // ######
-        // Given var X; Given var Y; Show P
-        // }
-        //  
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        givenImpFwd:"",
-
         givenAll:"",
 
-        // Rule givenImpFwd {g1 g2} {
-        // Path $g1 $g2
-        // Given PP -> QQ
-        // Given PP
-        // Show RR
-        // ######
-        // Given QQ
-        // Show RR
-        // }
-        // 
-        // 
-        // Rule showImpBack {g} {
-        // Path $g
-        // Given PP -> RR
-        // Show RR
-        // ######
-        // Show PP
-        // }   
-
+        givenImpFwd:"",
+   
         showImpBack:"",
 
-        // Rule givenImpFwd2 {g1 g2 g3} {
-        // Path $g1 $g2 g3
-        // Given {PP1 & PP2} -> QQ
-        // Given PP1
-        // Given PP2
-        // Show RR
-        // ######
-        // Given QQ
-        // Show RR
-        // }
+        //givenImpFwd2:"",
 
-        givenImpFwd2:"",
-
-        // Rule showImpBack2 {g} {
-        // Path $g
-        // Given {PP & QQ} -> RR
-        // Show RR
-        // ######
-        // Show PP
-        // Show QQ
-        // }
-
-        showImpBack2:"",
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //showImpBack2:"",
 
         givenNot:"",
         
@@ -105,13 +40,15 @@ function allCommands(){
         
         contradiction:"",
         
-        showLeqSuc:"",
+        //showLeqSuc:"",
         
-        showGeqSuc:"",
+        //showGeqSuc:"",
         
-        natShowSuc:"",
+        //natShowSuc:"",
 
-        showEqSwap:""
+        //showEqSwap:"",
+
+        //givenEx:""
 
 
     };
@@ -775,6 +712,32 @@ function getCommandPatterns(commandName){
                 {
                     Givens:[],
                     Show: stringToTree("y=x"),
+                    children: [],
+                    activeBranch: 1,
+                    id: 0,
+                    completeBranch:0,
+                    ruleUsed:"?"
+                }]
+        }
+
+        return pats;
+    }
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (commandName=="givenEx"){
+
+        var pats={
+
+            type: "given",
+
+            Pattern:{
+                Givens: [stringToTree("Ex x p")],
+                Show: stringToTree("r"),
+            },
+            Sub:[
+                {
+                    Givens:["var x",stringToTree("p")],
+                    Show: stringToTree("r"),
                     children: [],
                     activeBranch: 1,
                     id: 0,

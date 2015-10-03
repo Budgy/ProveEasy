@@ -21,6 +21,7 @@ function removeProbsFromDoc(){
 
 
         $( "[id^='sequent']" ).remove();
+        $( "#instructionsSequent" ).remove();
 
     }
 
@@ -54,7 +55,7 @@ function getListOfProbs(){// get and display all problem titles
 
     var probTitle = document.createElement("p")
     var text=document.createTextNode("Please select a problem");
-        probTitle.id= "sequentTitle";
+        probTitle.id= "instructionsSequent";
         probTitle.appendChild(text);
         document.body.appendChild(probTitle);
 

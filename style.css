@@ -17,6 +17,15 @@
 }
 
 
+#bitNextToAdvice {
+
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+
 
 
 [id^='rule '].hover{
@@ -35,6 +44,16 @@
     background-color: yellow;
 
 }
+
+
+[id='rule 0']{
+
+border-width: 16px;
+border-color: black;
+
+}
+
+
 [id^='sequent']{
 
     width: 150px;
@@ -118,6 +137,11 @@ button{
     display:none;
 
 }
+#button5{
+
+    display:none;
+
+}
 #button4{
 
     display:none;
@@ -132,6 +156,40 @@ button{
 
     display:none;
 
+}
+
+/*#submitBoxContent{
+
+    display:none;
+    position: absolute;    
+
+}
+
+
+#submitBoxContent{
+
+    display:none;
+    position: absolute;
+    z-index: 99999999999999999;
+    overflow: auto;
+}
+*/
+#submitBox {
+    position:absolute;
+    left:100px;
+    top:100px;
+    z-index: 99999999999999999;
+}
+#submitBox p { 
+    border:solid;
+    margin:10px;
+    background-color: white;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#submitBox p * {
+    margin:5px;
 }
 #getStarted{
 
@@ -173,16 +231,18 @@ button{
 }
 
 
-#sequentTitle{
+#instructionsSequent{
 
-    text-align: :center;
+    width: 150px;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    border-radius: 5px;
+    margin-right: auto;
+    margin-left:auto;
+    text-align: center;
     color: white;
     background-color: transparent;
 
-
-}
-#adviceContainer{
-    
 
 }
 
@@ -191,6 +251,7 @@ button{
     display: inline-block;
 
 }
+
 
 
 /*@media handheld {

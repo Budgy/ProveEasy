@@ -86,7 +86,7 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
      root;
 
  var tree = d3.layout.tree()
-     .size([width/2+(width/8), height]);
+     .size([width/2+(width/14), height]);
 
  var diagonal = d3.svg.diagonal();
 
@@ -136,7 +136,7 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
        d3.select("#graphView").attr("height", (nodes.length *180) +100);
 
    // Normalize for fixed-depth.
-   nodes.forEach(function(d) { d.y = d.depth * 100; });
+   nodes.forEach(function(d) { d.y = d.depth * 100 +40; });
 
 
 
@@ -155,7 +155,7 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
    // Enter any new nodes at the parent's previous position.
    var nodeEnter = node.enter().append("g")
        .attr("class", "node")
-       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; });
+       .attr("transform", function(d) { return "translate(" + (source.y0)+ "," + source.x0 + ")"; });
        
 
    nodeEnter.append("circle")
@@ -170,13 +170,7 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
        var allGElements = nodeEnter[0];
 
 
-
-
        for (var gElement = 0; gElement<allGElements.length; gElement++){
-
-
-
-
 
         if (!(allGElements[gElement] === null)) {
 
@@ -187,13 +181,14 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
 
             for (var given = 0; given<allGElements[gElement].__data__.model.model.Givens.length;given++){
 
+             
 
               currentSelection.append("text")
                 .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
                  .attr("dy", ((-2*given)-1.5)+"em")
                  .attr("id", function(d) { return d.model.model.activeBranch ? "1given"+allGElements[gElement].__data__.model.model.id+"."+ (given+1) : "given"+allGElements[gElement].__data__.model.model.id+"."+(given+1); })
                  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-                 .text("Given: "+displayTree(allGElements[gElement].__data__.model.model.Givens[given]))
+                 .text(allGElements[gElement].__data__.model.model.id+"."+(given+1)+": "+"Given: "+displayTree(allGElements[gElement].__data__.model.model.Givens[given]))
                  .style('fill',function(d) { return d.model.model.completeBranch ? "black":(d.model.model.activeBranch ? "yellow" : "#C2C2C2"); });
 
 
@@ -213,7 +208,7 @@ var margin = {top: 20, right: 0, bottom: 20, left: 0},
      .attr("dy", ".35em")
      .attr("id", function (d){return "show"+d.model.model.id})
      .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-     .text(function (d){return "Show: "+displayTree(d.model.model.Show);})
+     .text(function (d){return +d.model.model.id+": "+"Show: "+displayTree(d.model.model.Show);})
      .style('fill',function(d) { return d.model.model.completeBranch ? "black":(d.model.model.activeBranch ? "yellow" : "#C2C2C2"); });
        //.style("fill-opacity", 1e-6);
 

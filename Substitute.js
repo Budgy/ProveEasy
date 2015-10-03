@@ -36,8 +36,33 @@ function substitute (matches, commandSubNode){
 
                     if(matches.hasOwnProperty(node.model.value)){
 
+                        if(typeof matches[node.model.value] == 'object'){
 
-                        node.model.value = matches[node.model.value];
+                           node.children = matches[node.model.value].children;
+
+                           if(node.hasOwnProperty('parent')){
+
+                               for (var i = 0; i<node.parent.model.children.length;i++){
+
+                                    if (node.parent.model.children[i].value == node.model.value){
+
+                                        node.parent.model.children[i] = matches[node.model.value].model;
+
+                                    }
+
+
+                               }
+
+                           }
+
+                            node.model = matches[node.model.value].model;
+
+
+                        }else{
+
+                            node.model.value = matches[node.model.value];
+
+                        }
 
 
                     }
@@ -243,7 +268,24 @@ function givenAllControlFunctionPart2(matches, commandSubNode, commandTracker, t
 
 
     insertIntoTree(commandSubNode, proofTree, commandTracker);
-    visualiseProofTree(proofTree);
+
+
+    //display the correct view mode
+
+
+    if (document.getElementById("entireProofSoFar")){
+
+        visualiseProofTree(proofTree);
+
+    }
+    else if (document.getElementById("graphView")){
+
+        makeGraph(proofTree,1.5);
+        
+    }
+
+
+    
     commandSubNode= {};
     matches = {};
 }
@@ -262,7 +304,7 @@ function givenAllControlFunctionPart2(matches, commandSubNode, commandTracker, t
 function givenAllFunction(matches, givenString, commandSubNode, commandName, commandTracker){
 
     newMatches= cloneControlFunction(matches);//deep clone matches to avoid altering the tree
-    
+    commandTrackerClone = commandTracker;
     givenStrings = givenString.split(" ");
 
     var subject= givenStrings[0] //p
@@ -287,7 +329,7 @@ function givenAllFunction(matches, givenString, commandSubNode, commandName, com
                     term = document.getElementById(event.target.id).textContent;
                     givenAllSelected = 0;
                     newMatches =  givenAllSubPart(subject, varToReplace, term, newMatches);
-                    givenAllControlFunctionPart2(newMatches, commandSubPart, commandTracker, term);
+                    givenAllControlFunctionPart2(newMatches, commandSubPart, commandTrackerClone, term);
                     
                     //when selection of choice is detected
 

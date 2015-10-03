@@ -694,14 +694,22 @@ function getGivenVariablesAndCreateList(proofTree){// returns a list of given va
 
         for (var given=0; given<node.model.Givens.length;given++){
 
-            if(node.model.Givens[given].model.value.length==1 
-                || node.model.Givens[given].model.value.length==2  && node.model.Givens[given].model.value.endsWith("_")
-                    ||node.model.Givens[given].model.value.length==3  &&node.model.Givens[given].model.value.endsWith("1_")){
+
+            if (node.model.Givens[given].model.type =="variable"){
+
+                if(node.model.Givens[given].model.value.length==1 
+                    || node.model.Givens[given].model.value.length==2  && node.model.Givens[given].model.value.endsWith("_")
+                        ||node.model.Givens[given].model.value.length==3  &&node.model.Givens[given].model.value.endsWith("1_")){
 
 
-                appropriateGivens[node.model.id]=node.model.Givens[given].model.value;
+                    appropriateGivens[node.model.id]=node.model.Givens[given].model.value;
+
+                }
+
 
             }
+
+
 
         }
 

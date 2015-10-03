@@ -53,6 +53,9 @@
         <script type="text/javascript" src= "Parser.js"></script>
         <script type="text/javascript" src="ControlFunctionAndTreeInsertion.js"></script>
         <script type="text/javascript" src="proofAssistant.js"></script>
+        <script type="text/javascript" src="XMLWriter-1.0.0.js"></script>
+		<script type="text/javascript" src="Submit.js"></script>
+
 		<script type="text/javascript">
 		
 		
@@ -103,12 +106,33 @@
 			<button id = "getStarted" onClick="firstTimeStartUp();">GetStarted</button>
 			</div>
 
+<!-- 
+			<div id = "submitBox">
+			<textarea id = "submitBoxContent" rows="10" cols="150" readonly></textarea>
+			<button onClick="$("#submitBox").hide();">Close</button>
+			</div>
+ -->
+
+
+			<div id = "submitBox" hidden="true" >
+				<p>
+	  				<input type="button" name="hidesubmitBox" onClick="$(&quot;#submitBox&quot;).hide();" value ="Close"/><br />
+	  				<textarea display="none" id = "box"  readonly="readonly" cols="20" rows="10" overflow="hidden" ></textarea>
+				</p>
+     		 </div>
+
+
+
+
+
+
 		<span id = "buttonsId">
 
 			<button id = "button1" onClick="showProblems();">Click for List of Problems</button>
 			<button id = "button2" onClick="toggleView(proofTree);">Toggle view</button>
 			<button id = "button3" onClick="toggleRulesVisibility();">hide commands</button>
 			<button id = "button4" onClick="proofAssistant(proofTree, currentCommandSelected);">get advice</button>
+			<button id = "button5" onClick="Submit();">Submit</button>
 			<p id = "bitNextToAdvice">Advice: </p>
 			
             

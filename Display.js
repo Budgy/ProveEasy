@@ -251,7 +251,15 @@ function displayGivenAllOptions(givensThatCanBeUsed) {
 	
 
 	document.body.appendChild(display);
-	$("#givenChoices").insertBefore("#entireProofSoFar");
+	if (document.getElementById("entireProofSoFar")){
+
+		$("#givenChoices").insertBefore("#entireProofSoFar");
+
+	}else{
+
+		$("#givenChoices").insertBefore("#graphView");
+	}
+	
 
 	var givenChoices= document.createElement("h3");
 	var choicesNode=document.createTextNode("Choices");
