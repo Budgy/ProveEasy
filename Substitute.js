@@ -37,6 +37,14 @@ function substitute (matches, commandSubNode){
         if (matches.hasOwnProperty(currentNode.Show)){//do the same with show
 
             currentNode.Show = matches[currentNode.Show];
+
+            if (typeof currentNode.Show == "string"){
+
+                currentNode.Show = stringToTree(currentNode.Show);
+
+            }
+
+
         }
     }
     return commandSubNode;

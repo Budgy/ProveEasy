@@ -15,7 +15,8 @@ function allCommands(){
 				Show: "q",
 				children: [],
 				activeBranch: 1,
-				id: 0
+				id: 0,
+				completeBranch:0
 			}]
 		},
 
@@ -34,14 +35,17 @@ function allCommands(){
 				Givens:[],
 				Show: "p",
 				children: [],
-				activeBranch: 1
+				activeBranch: 1,
+				id:0,
+				completeBranch:0
 			},
 			{
 				Givens:["q"],
 				Show: "r",
 				children: [],
 				activeBranch: 0,
-				id: 0
+				id: 0,
+				completeBranch:0
 			}]
 		},
 
@@ -61,7 +65,8 @@ function allCommands(){
 				Show: "r",
 				children: [],
 				activeBranch: 1,
-				id: 0
+				id: 0,
+				completeBranch:0
 			}]
 		},
 
@@ -82,16 +87,29 @@ function allCommands(){
 				Show: "p",
 				children: [],
 				activeBranch: 1,
-				id: 0
+				id: 0,
+				completeBranch:0
 			},
 			{
 				Givens:[],
 				Show: "q",
 				children: [],
 				activeBranch: 0,
-				id: 0
+				id: 0,
+				completeBranch:0
 			}]
+		},
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		given:{
+
+			type:"complete"
+
+
 		}
+
+
 	};
 	return commandsList
 }

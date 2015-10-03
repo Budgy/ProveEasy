@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	$(document).on( "click","p", function(event){
+	$(document).on( "click","p, pre", function(event){
 		
 		if ($(this).is("[id ^= 'rule']")){ //if a rule is selected
 
@@ -29,6 +29,8 @@ $(document).ready(function(){
 
 
 		else if ($(this).is("[id ^= 'show']")&& givenRuleSelected == 0){ // if a show statement is selected before a given rule has been chose
+
+			idForThis = event.target.id;
 
 			showSelected = event.target.id.split("show")[1];
 			changeToThisBranchPath(showSelected,proofTree);			

@@ -26,6 +26,8 @@ function visualiseProofTree(proofTree){
 	tree.appendChild(treeNode);
 	document.getElementById("entireProofSoFar").appendChild(tree);
 
+	indent = "";
+
 
 	//walk through tree appending as we go
 	proofTree.walk(function (node) {
@@ -35,25 +37,24 @@ function visualiseProofTree(proofTree){
 		var id = node.model.id;
 		var	j = 1;
 
+		for ( var i=1; i<=id.length-1;i++){
+
+			indent = indent+"  ";
+
+		}
+
+
 		if (givens.length == 0){
 
 
 			//do nothing
 
-/*			given = "";
-			var give = document.createElement("p");
-			var givenNode=document.createTextNode(given);
-			give.id= "given"+ id +"."+j;
-			j++;
-			give.appendChild(givenNode);
-			document.getElementById("entireProofSoFar").appendChild(give);
-*/
 		}
 		else{
 
 			for (var l = 0; l<givens.length; l++){// for each given
 
-				var give = document.createElement("p");
+				var give = document.createElement("pre");
 
 				if (typeof givens[l] == 'string'){
 					     	
@@ -61,21 +62,33 @@ function visualiseProofTree(proofTree){
 
    				}
 
-				var givenNode=document.createTextNode("Given "+ displayTree(givens[l]));
+   				givenText = id+"."+j+"    Given "+ displayTree(givens[l]);
+
+				var givenNode=document.createTextNode(indent+givenText);
 				give.id= "given"+ id +"."+j;
 				j++;
-				give.appendChild(givenNode);
 
-				if (node.model.activeBranch ==1){//if the node is active make it yellow
+				give.appendChild(givenNode);
+				
+				
+
+				if (node.model.activeBranch ==1&& node.model.completeBranch == 0){//if the node is active make it yellow and not complete
 
 					give.style.backgroundColor = "yellow";
+				}
+				if (node.model.completeBranch == 1){//if the node is active make it yellow and complete
+
+
+					give.style.backgroundColor = "grey";
+
+
 				}
 				document.getElementById("entireProofSoFar").appendChild(give);
 			}
 		}
 
 		// now display the show
-		var sho = document.createElement("p");
+		var sho = document.createElement("pre");
 
 	    if (typeof show == 'string'){
 						     	
@@ -83,15 +96,37 @@ function visualiseProofTree(proofTree){
 
 	    }
 
-		var showNode=document.createTextNode("Show "+displayTree(show));
+	    showText = id+"    Show "+displayTree(show);
+
+	 
+		var showNode=document.createTextNode(indent+showText);
+
 		sho.id= "show"+id;
+
+
 		sho.appendChild(showNode);
 
-		if (node.model.activeBranch ==1){//if the node is active make it yellow
+
+
+
+
+
+		if (node.model.activeBranch ==1 && node.model.completeBranch == 0){//if the node is active make it yellow
 
 			sho.style.backgroundColor = "yellow";
 		}
+
+		if (node.model.completeBranch == 1){//if the node is active make it yellow and complete
+
+
+			sho.style.backgroundColor = "grey";
+
+		}
 		document.getElementById("entireProofSoFar").appendChild(sho);
+
+
+		indent = "";
+
 	});
 }
 
@@ -139,3 +174,8 @@ function displayRules () {// display the rules/commands
 
 
 }
+
+
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};

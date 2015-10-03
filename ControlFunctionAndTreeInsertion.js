@@ -35,15 +35,92 @@ function controlFunction(command, proofTree){
     pattern = patterns.Pattern;
     sub = patterns.Sub;
 
+    if (patterns.type == "complete"){// if the given rule is selected
+
+
+            var GivenVariables= getGivenVariables(proofTree);
+
+            proofTree.walk(function (node) {
+
+                if (node.model.children.length == 0 && node.model.activeBranch ==1){//find active leaf
+
+                    
+                    for (var i =0; i<GivenVariables.length;i++){//compare the show to each given in path
+
+                       if (GivenVariables[i].model.value == node.model.Show.model.value){// if there is a match then that branch is complete
+
+                            node.model.completeBranch = 1;
+
+                            var hasBeenMatch =0;
+
+
+                            proofTree.walk(function (node) {
+                                // Halt the traversal by returning false
+                                if (node.model.children.length == 0 &&node.model.completeBranch==0){//find active leaf
+
+                                    hasBeenMatch =1;
+                                    changeToThisBranchPath(node.model.id,proofTree);
+
+                                }
+                            });
+
+                            if (hasBeenMatch ==0){
+
+                                alert("proofComplete");
+                                return false;
+
+                            }
+                            if (hasBeenMatch == 1){
+
+                            hasBeenMatch= 0;
+                            return false;
+
+                            }
+
+                       }
+
+                    }       
+
+                }
+            });
+    }
+
+
+
+
+
+
+
     if (patterns.type == "show"){ //if a show rule is selected
 
 
         proofTree.walk(function (node) {
             // Halt the traversal by returning false
-            if (node.model.children.length == 0 && node.model.activeBranch ==1){//fine active leaf
+            if (node.model.children.length == 0 && node.model.activeBranch ==1){//find active leaf
+
+
+
+
+                thisApplicableShow = node.model.Show; //get the show from it
+
+                         if (typeof thisApplicableShow == 'string'){// if the show is a string, make it a tree
+
+                            thisApplicableShow = stringToTree(thisApplicableShow);
+
+                         }
+
+
+                            var tree = new TreeModel();
+
+                            newShowNode = tree.parse({// parse the new node into a tree
+                    
+                            Show: thisApplicableShow, //show must be in tree form, maybe create seperate element for it?
+                            Givens: node.model.Givens
+                                    
+                            });
 
                 //match node to the pattern
-                matches = nodeMatching(pattern, node, patterns.type);
+                matches = nodeMatching(pattern, newShowNode, patterns.type);
                 
             }
         });
@@ -67,7 +144,7 @@ function controlFunction(command, proofTree){
 function continueControl (givenLine, proofTree, command){
 
     //get given selected
-    var givenSplit= givenLine.split(" ")
+    var givenSplit= givenLine.split("Given ")
     var givenSelected= givenSplit[1];
     var matches = " ";
 
@@ -97,11 +174,11 @@ function continueControl (givenLine, proofTree, command){
 
                          applicableShow = node2.model.Show; //get the show from it
 
-                         if (typeof applicableShow == 'string'){// if the show is a string, make it a tree
+                        if (typeof applicableShow == 'string'){// if the show is a string, make it a tree
 
                             applicableShow = stringToTree(applicableShow);
 
-                         }
+                        }
                     }
                 });
 
@@ -115,7 +192,7 @@ function continueControl (givenLine, proofTree, command){
                 });
 
                 //carry out matching
-                matches = nodeMatching(pattern, newNode,patterns.type);
+                matches = nodeMatching(pattern, newNode, patterns.type);
             }
 
             if (displayTree(node.model.Givens[i])==givenSelected && node.model.activeBranch ===0){//if givens match but is not an active branch

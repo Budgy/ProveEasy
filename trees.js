@@ -23,7 +23,8 @@ function initialiseProofTree(problem) {//currently playing around with adding ch
         Givens: [],
         children: [], 
         activeBranch: 1,
-        id: 1
+        id: 1,
+        completeBranch:0
     });
 
     return newTreeRoot;
@@ -202,6 +203,39 @@ function objToString (obj) {// takes and object (matches) and outputs a printabl
 
 
 
+function getGivenVariables(proofTree){
+
+    var givensList = [];
+
+    proofTree.walk(function (node) {
+
+
+        if (node.model.activeBranch ==1&&node.model.Givens.length>0){//find active leaf
+
+
+            for (var i =0;i<node.model.Givens.length;i++){
+
+                givensList.push(node.model.Givens[i]);
+
+
+            }
+                              
+        }
+
+    });
+
+
+    return givensList;
+
+}
+
+
+
+
+
+
+
+
 function changeToThisBranchPath (id, proofTree) {//change active branch, buggy
 
     
@@ -219,6 +253,13 @@ function changeToThisBranchPath (id, proofTree) {//change active branch, buggy
                 alert("old show, select a newer one");
                 return;
 
+            }
+            if (node.model.id == showSelected && node.model.completeBranch ==1){
+
+
+
+                alert("branch already complete, please select a different one");
+                return;
             }
 
          });
@@ -256,6 +297,9 @@ function changeToThisBranchPath (id, proofTree) {//change active branch, buggy
         return null;
 
 }
+
+
+
 
 
 
