@@ -4,13 +4,19 @@
 	<head>
 	
 		<title>ProveEasy</title>
-		<script type="text/javascript" charset="utf-8" src="cordova-1.9.0.js"></script>
-		<script type="text/javascript" charset="utf-8" src="ProdCalc1Probs.js"></script>
-		<script type="text/javascript" src="jquery-1.10.2.js"></script>
-		<script type="text/javascript" src="openProblem.js"></script>
-		<script type="text/javascript" src="basicCommands.js"></script>
-		<script type="text/javascript" src="trees.js"></script>
+		<script type="text/javascript" src="cordova-1.9.0.js"></script>
+		<script type="text/javascript" src="PEG.js"></script>
 		<script type="text/javascript" src="TreeModel.js"></script>
+		<script type="text/javascript" src="jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="ProdCalc1Probs.js"></script>
+		<script type="text/javascript" src="Events.js"></script>
+		<script type="text/javascript" src="trees.js"></script>
+		<script type="text/javascript" src="basicCommands.js"></script>
+		<script type="text/javascript" src="GetProblemMethods.js"></script>
+        <script type="text/javascript" src="PatternMatching.js"></script>
+        <script type="text/javascript" src="Display.js"></script>
+        <script type="text/javascript" src="Substitute.js"></script>
+        <script type="text/javascript" src="ControlFunctionAndTreeInsertion.js"></script>
 		<script type="text/javascript">
 		
 		
@@ -21,17 +27,19 @@
 				if (buttonToggle == false){// if button has not been pressed
 					buttonToggle = true;
 			 		getListOfProbs();
-			 		goBackwards();
-					document.getElementById("goal").innerHTML= "";
-				}else{
+                                     
 				}
 			}
-			
+
 		</script>
 	</head>
 	<body>
+			
+			<input type = "text" id = "myText1" value = "pattern text here"/>
+       		<input type = "text" id = "myText2" value = "instance text here"/>
+
 			<h3>ProveEasy</h3>
 			<button id = "button1" onClick="showProblems();">Click for List of Problems</button>
-			<p id = "goal"></p>
+			<button id = "button2" onClick="turnTextToTreesTestMatching(document.getElementById('myText1').value, document.getElementById('myText2').value)">Click to attempt matching</button>
 	</body>
 </html>

@@ -1,30 +1,193 @@
-	function givenAnd(tree, indexInTree){
-		
-		sequents = find(tree,indexInTreeOfGiven);
-		
-		showSequent = sequents[sequents.length][2];
-		index = showSequent.indexOf("&");
-		
-			addShow();
-			addGiven();
-			addGiven();
-			
-			return tree;
+function allCommands(){
+
+	 var commandsList={
+
+		showImp:{
+
+			type: "show",
+
+			Pattern:{
+				Givens: "",
+				Show: stringToTree("p -> q"),
+			},
+			Sub:[{
+				Givens:["p"],
+				Show: "q",
+				children: [],
+				activeBranch: 1,
+				id: 0
+			}]
+		},
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		givenImp:{
+
+			type: "given",
+
+			Pattern:{
+				Givens: stringToTree("p -> q"),
+				Show: stringToTree("r"),
+			},
+			Sub:[
+
+			{
+				Givens:[],
+				Show: "p",
+				children: [],
+				activeBranch: 1
+			},
+			{
+				Givens:["q"],
+				Show: "r",
+				children: [],
+				activeBranch: 0,
+				id: 0
+			}]
+		},
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		givenAnd:{
+
+			type: "given",
+
+			Pattern:{
+				Givens: stringToTree("p & q"),
+				Show: stringToTree("r"),
+			},
+			Sub:[
+			{
+				Givens:["p","q"],
+				Show: "r",
+				children: [],
+				activeBranch: 1,
+				id: 0
+			}]
+		},
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		showAnd:{
+
+			type: "show",
+
+			Pattern:{
+				Givens: "",
+				Show: stringToTree("p & q"),
+			},
+			Sub:[
+
+			{
+				Givens:[],
+				Show: "p",
+				children: [],
+				activeBranch: 1,
+				id: 0
+			},
+			{
+				Givens:[],
+				Show: "q",
+				children: [],
+				activeBranch: 0,
+				id: 0
+			}]
+		}
+	};
+	return commandsList
+}
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function getCommandPatterns(commandName){
+
+	commandsList = allCommands(); // get list of commands
+
+	if (commandsList.hasOwnProperty(commandName)){// if the selected command is in the list then return the patterns
+
+		return commandsList[commandName];
+
 	}
-	function showImp(tree, nodeOfTree){
-		
-		showsAndGivens= find(tree, nodeOfTree);
-		
-		
-		
+	else{// command doesn't exist :S
+
+		console.log("command does not exits");
+		return;
 	}
+
+}
+
+		
+function given(){ //not finished yet
+
+	proofTree.walk(function (node) {
+	    // Halt the traversal by returning false
+	    if (node.model.children.length == 0 && node.model.activeBranch ==1){
+
+	    	selectedLeafNode = node.model.Show;
+
+	    	return false;
+	    }
+	});
+
+
+	if (selectedLeafNode.type == "variable"){
+
+		previousGivens = getAllGivens(proofTree);
+
+		if ($.inArray(selectedLeafNode, previousGivens)){
+
+			thisIsTrue= 1
+			asda =2
+
+		}
+	}
+
+	else{
+
+		alert("not given");
+	}
+}
+
+
+
+
+
+function getAllGivens(proofTree) {// gets all givens in the active path of the tree, untested
+
+	allActiveGivens = [];
+
+	proofTree.walk(function (node) {
+	    // Halt the traversal by returning false
+	    if (node.model.activeBranch === 1){
+
+	    	for (var i = 0; i< node.model.Givens.length; i++){
+
+	    	allActiveGivens.push(node.model.Givens[i])
+	    	}
+	    }
+	});
+
+	return allActiveGivens;
+};
+
 	// Rule showImp {} {
 	// Show P -> Q
 	// #####
 	// Given P; Show Q
 	// }
-	
-	
+
+	// Rule givenImp {g} {
+	// Path $g
+	// Given P -> Q; Show R
+	// #####
+	// Show P
+	// Given Q; Show R
+	// }
+		
 	
 	
 	
@@ -35,13 +198,7 @@
 // Given P; Given Q; Show R
 // }
 //
-// Rule givenImp {g} {
-// Path $g
-// Given P -> Q; Show R
-// #####
-// Show P
-// Given Q; Show R
-// }
+
 //
 // Rule givenAll {g tm} { # g1: givenpath tm : term to instantiate
 // Path $g

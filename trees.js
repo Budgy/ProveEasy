@@ -1,114 +1,262 @@
-function initialiseTree(sequent) {
-
-	var tree = new Array();
-	tree[0] = new Array();
-	tree[0][0] = new Array();
-	tree[0][0][0] = 1;
-	tree[0][0][1] = "Show ";
-	tree[0][0][2] = sequent;
-
-	addGiven(tree, "maithu");
-	addGiven(tree, "enToAdd");
-	addGiven(tree, "jamie");
-	thing = givenAnd(tree, 1);
-
-	// tree is a list of list of lists, each containing [[*[node number, given,
-	// sequent], [node number, show, sequent]]]
-	return tree;
+function getProblemTree(problem) {
+    
+    parser= PEG.buildParser("start = sep* AND:AND sep* {return AND} AND= left:implication sep* operator:\"&\" sep* right:AND {return {type:\"operator\", value:operator, children:[left,right]}} /implication implication = left:primary sep* operator:\"->\" sep* right:implication{return {type:\"operator\", value:operator, children:[left,right]}}/primary primary  = letter:letter{return {type:\"variable\", value:letter}}/ \"{\" sep* AND:AND sep* \"}\" {return AND}/\"(\" sep* AND:AND sep* \")\" {return AND} sep = spaces:[' ',\\t,\\r,\\n] letter  = letters:[a,b,p,q,r]");    
+    Result = parser.parse(problem);
+    tree = new TreeModel();
+    root = tree.parse(Result);    
+    return root;
 
 }
 
-function addGiven(tree, givenToAdd) {
+function initialiseProofTree(problem) {//currently playing around with adding children to tree
+    
 
-	var lastElement = new Array();
-	lastElement[0] = tree[tree.length - 1];
+    parser= PEG.buildParser("start = sep* AND:AND sep* {return AND} AND= left:implication sep* operator:\"&\" sep* right:AND {return {type:\"operator\", value:operator, children:[left,right]}} /implication implication = left:primary sep* operator:\"->\" sep* right:implication{return {type:\"operator\", value:operator, children:[left,right]}}/primary primary  = letter:letter{return {type:\"variable\", value:letter}}/ \"{\" sep* AND:AND sep* \"}\" {return AND}/\"(\" sep* AND:AND sep* \")\" {return AND} sep = spaces:[' ',\\t,\\r,\\n] letter  = letters:[a,b,p,q,r]");
 
-	newNodeNumber = parseFloat(lastElement[0][0]) + parseFloat(0.1);
+    var tree = new TreeModel();
+    Result = parser.parse(problem);
+    showTree = tree.parse(Result);  
 
-	// #floatinaccuracy
-	tree.splice(tree.length, 0, [ newNodeNumber.toFixed(2), "Given ",
-			givenToAdd ]);
-	return tree;
+    newTreeRoot = tree.parse({
+        
+        Show: showTree, //show must be in tree form, maybe create seperate element for it?
+        Givens: [],
+        children: [], 
+        activeBranch: 1,
+        id: 1
+    });
+
+    return newTreeRoot;
 }
 
-function addShow(tree, showToAdd) {
 
-	var lastElement = new Array();
-	lastElement[0] = tree[tree.length - 1];
 
-	if (lastElement[0][1] == "Given ") {
+function getDepth (tree){
 
-		newNodeNumber = parseInt(lastElement[0][0], 10) + "1";
-		tree.splice(tree.length, 0, [ newNodeNumber, "Show ", showToAdd ]);
+    max=0;
 
-	} else if (lastElement[0][1] == "Show ") {
+    tree.walk(function (node) {
+    // Halt the traversal by returning false
 
-		newNodeNumber = parseInt(lastElement[0][0] + "1");
-		tree.splice(tree.length, 0, [ newNodeNumber, "Show ", showToAdd ]);
-	}
-	return tree;
+        if (node.children.length===0){
+
+            nodeArray = node.getPath();
+            
+            if (nodeArray.length>max){
+
+                max=nodeArray.length;
+            }
+        }
+    });
+
+    return max;
 }
 
-function getGivens(tree) {
 
-	listOfGivens = new Array();
 
-	for ( var i = 0; i < tree.length; i++) {
+function compareChildren(patternTree, instanceTree){
 
-		if (tree[i][1] == "Given ") {
+    arrayOfPatternChildren = [];
+    arrayOfInstanceChildren = [];
 
-			listOfGivens.push(tree[i][2]);
+    patternTree.walk(function (node) {
+    // Halt the traversal by returning false
 
-		}
-		return listOfGivens;
-	}
+        arrayOfPatternChildren.push(node.children.length);
+
+    });
+    instanceTree.walk(function (node) {
+    // Halt the traversal by returning false
+
+        arrayOfInstanceChildren.push(node.children.length);
+
+    });
+
+     return arrayOfPatternChildren.compare(arrayOfInstanceChildren);
 }
 
-// traversal
-function find(tree, nodeNumber) {
 
-	for ( var i = 0; i < tree.length; i++) {
-		for ( var j = 0; j < tree[i].length; j++) {
-			if (tree[i][j][0] == nodeNumber) {
-				sequents[0] = new Array();
-					sequents = tree[i][j];
-			}
 
-		}
 
-	}
 
-	return sequent;
+
+function displayTree(tree) {// takes a tree and prints it as a string with appropriate parenthesis
+    
+    var dispStr = "";
+    var operator ="";
+    var leftSide = "";
+    var rightSide = "";
+    var onlyAVariable = 0;
+
+
+    tree.walk({strategy: 'breadth'}, function (node) {
+
+        if ((node.children.length === 0)&&(operator=="")&&(leftSide=="")&&(rightSide=="")){
+
+            leftSide = node.model.value;
+            return false;
+        }
+
+        if (rightSide!=""){
+            
+            return false;
+        }
+
+        //dispStr = node.model.value + dispStr;
+        if ((node.model.type == "operator")&&(operator=="")){
+
+            operator = node.model.value;
+
+        }else{
+
+            if ((leftSide == "")&&(operator!="")){
+
+                if (node.model.type == "operator"){
+
+                    leftSide = displayTree(node);
+
+                }else{
+
+                    leftSide = node.model.value;
+                }
+
+            } else if ((rightSide == "")&&(operator!="")) {
+
+                 if (node.model.type == "operator"){
+                    rightSide = displayTree(node);
+
+                }else{
+
+                    rightSide = node.model.value;
+                }
+            }
+        }  
+    });
+
+        //once left operator and righ are all filled, combine them together
+        dispStr = "("+leftSide + operator + rightSide+")";    
+    
+    return dispStr;
 }
 
-function goBackwards() {
 
-	treesapient = new TreeModel();
 
-	root = treesapient.parse({
-	    id: 1,
-	    children: [
-	        {
-	            id: 11,
-	            children: [{id: 111}],
-	            Givens: [{formulas:'a'},{formulas:'b'}],
-	            Show: [{formulas:'c'}]
-	           
-	        },
-	        {
-	            id: 12,
-	            children: [{id: 121}, {id: 122}]
-	        },
-	        {
-	            id: 13
-	        }
-	    ]
-	});
-	
-	
-	
-	
-	
-	
-	
+Array.prototype.compare = function (array) {// allows two arrays to be compared
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].compare(array[i]))
+                return false;
+        }
+        else if (this[i] != array[i]) {
+            // Warning - two different object instances will never be equal
+            return false;
+        }
+    }
+    return true;
 }
+
+function stringToTree(string){// takes a string and outputs a tree
+
+        parser= PEG.buildParser("start = sep* AND:AND sep* {return AND} AND= left:implication sep* operator:\"&\" sep* right:AND {return {type:\"operator\", value:operator, children:[left,right]}} /implication implication = left:primary sep* operator:\"->\" sep* right:implication{return {type:\"operator\", value:operator, children:[left,right]}}/primary primary  = letter:letter{return {type:\"variable\", value:letter}}/ \"{\" sep* AND:AND sep* \"}\" {return AND}/\"(\" sep* AND:AND sep* \")\" {return AND} sep = spaces:[' ',\\t,\\r,\\n] letter  = letters:[a,b,p,q,r]");
+        parsedString = parser.parse(string);
+        tree = new TreeModel();
+        newTree = tree.parse(parsedString);
+
+        return newTree;
+
+}
+
+function objToString (obj) {// takes and object (matches) and outputs a printable string
+    
+            var str = '';
+            for (var p in obj) {
+                if (obj.hasOwnProperty(p)) {
+
+                    if(obj[p].hasOwnProperty('children')){
+                        // tree = new TreeModel();
+                        // tempTree= tree.parse(obj[p]);
+
+                        str += p + '::' + displayTree(obj[p]) + '\n';
+
+                    }else{
+
+                        str += p + '::' + obj[p] + '\n';
+
+                    }                       
+                }
+            }
+    return str;
+ }
+
+
+
+
+
+function changeToThisBranchPath (id, proofTree) {//change active branch, buggy
+
+    
+    var showSelected= id;
+
+        proofTree.walk(function (node) {// get the path of the selected show
+            // Halt the traversal by returning false
+            if (node.model.id == showSelected && node.model.children.length==0){
+
+                path = node.getPath();
+                return false;
+            }
+            if (node.model.id == showSelected && node.model.children.length!=0){
+
+                alert("old show, select a newer one");
+                return;
+
+            }
+
+         });
+
+
+
+        proofTree.walk(function (node) {// make everything non-active
+            // Halt the traversal by returning false
+            if (node.model.activeBranch ==1){
+
+                node.model.activeBranch =0;
+                
+            }
+
+         });
+
+
+
+        proofTree.walk(function (node) {// make only the nodes in the path found active
+            // Halt the traversal by returning false
+
+            for (var i =0; i<path.length; i++){
+
+                if (node.model.id == path[i].model.id){
+
+                    node.model.activeBranch =1;
+                    
+                }
+            }
+
+         });
+
+        // refresh printed tree
+        visualiseProofTree(proofTree);
+        return null;
+
+}
+
+
+
+
